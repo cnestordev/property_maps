@@ -1,10 +1,5 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 .dashboard-container {
@@ -163,11 +158,21 @@ span.city-tag.selected {
   margin-bottom: 15px;
 }
 
+
 .price-subheader {
   color: #353535;
   font-weight: 600;
   font-size: 1.5rem;
   margin-top: 0;
+}
+
+@media (max-width: 992px) {
+  .address-header {
+    font-size: 1.2rem;
+  }
+  .price-subheader {
+    font-size: 1.1rem;
+  }
 }
 
 .action-buttons {
@@ -194,4 +199,46 @@ span.city-tag.selected {
 .view-on-google .gmaps-logo {
   width: 30px;
   height: 30px;
+}
+
+.embla {
+  overflow: hidden;
+}
+.embla__container {
+  display: flex;
+}
+.embla__slide {
+  flex: 0 0 100%;
+  min-width: 0;
+}
+
+.image-input-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 17px;
+  height: 100px;
+  width: 100%;
+  background-color: #ebebeb;
+  cursor: pointer;
+}
+
+.image-input-container span {
+  font-size: 1.2rem;
+  color: #252525;
+  font-weight: 500;
+}
+
+.image-display-container {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  border-radius: 17px;
+  gap: 10px;
+}
+
+.image-display-container img {
+  width: 100px;
+  height: 100px;
+  border-radius: 17px;
 }

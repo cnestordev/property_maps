@@ -1,5 +1,6 @@
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import React, { useEffect, useState } from 'react';
+import useEmblaCarousel from 'embla-carousel-react';
 
 import Crosshair from "./images/crosshair.png";
 import GMaps from "./images/google_maps.png";
@@ -27,6 +28,7 @@ function Map() {
     });
     const [zoom, setZoom] = useState(10);
     const [showForm, setShowForm] = useState(false);
+    const [emblaRef] = useEmblaCarousel();
 
 
     const toggleCitySelection = (city) => {
@@ -56,12 +58,10 @@ function Map() {
         if (position) {
             console.log("%c position has changed!", "color: red");
             const uniqueCities = async (locations) => {
-                console.log(locations)
                 const result = [];
                 const seenCities = new Set();
 
                 for (const { location: { city, state } } of locations) {
-                    console.log(city, state)
                     if (!seenCities.has(city)) {
                         let coords = await getCityCoordinates({ city, state });
                         seenCities.add(city);
@@ -183,6 +183,9 @@ function Map() {
         window.open(googleMapsQuery, '_blank');
     };
 
+    const handleUpatePositions = (newPositions) => {
+        setPosition(newPositions);
+    };
 
 
     return (
@@ -237,10 +240,18 @@ function Map() {
                         {
                             selectedMarker && (
                                 <div>
-                                    <h2 className='address-header'>{selectedMarker.location.address}</h2>
+                                    <h2 className='address-header'>{selectedMarker.name}</h2>
                                     <p className='price-subheader'>${parseInt(selectedMarker.price, 10).toLocaleString()}</p>
                                     <div onClick={() => handleOpen(selectedMarker.listingUrl)} style={{ cursor: 'pointer' }}>
-                                        <img style={{ width: '100%' }} src={selectedMarker.imageUrl} alt="Property" />
+                                        <div className="embla" ref={emblaRef}>
+                                            <div className="embla__container">
+                                                {
+                                                    selectedMarker.imageUrls.map((url, index) => (
+                                                        <div className="embla__slide" key={index}><img style={{ width: '100%' }} src={url} alt="Property" /></div>
+                                                    ))
+                                                }
+                                            </div>
+                                        </div>
                                     </div>
                                     <div className='action-buttons'>
                                         <button className='view-on-google' onClick={() => handleMaps(selectedMarker.location.address)}>
@@ -262,6 +273,7 @@ function Map() {
                             setShowForm={setShowForm}
                             isOpen={showForm}
                             handleCloseModal={setShowForm}
+                            handleUpatePositions={handleUpatePositions}
                         />
                     )
                 }
