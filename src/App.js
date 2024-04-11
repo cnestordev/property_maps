@@ -3,7 +3,13 @@ import './App.css';
 import Map from './Map';
 
 function App() {
-  const googleApiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY
+  let googleApiKey = localStorage.getItem("googleApiKey")
+
+  if (!googleApiKey) {
+    const googleApiKeyNew = prompt("What is the api key?")
+    localStorage.setItem("googleApiKey", googleApiKeyNew)
+    googleApiKey = localStorage.getItem("googleApiKey")
+  }
 
   return (
     <div className="App">
