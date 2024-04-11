@@ -5,7 +5,7 @@ import Map from './Map';
 function App() {
   let googleApiKey = localStorage.getItem("googleApiKey")
 
-  if (!googleApiKey) {
+  if (googleApiKey == "null") {
     const googleApiKeyNew = prompt("What is the api key?")
     localStorage.setItem("googleApiKey", googleApiKeyNew)
     googleApiKey = localStorage.getItem("googleApiKey")
