@@ -1,20 +1,28 @@
 body {
   margin: 0;
+  background-color: #f3f3f3;
+}
+
+.parent-container {
+  box-sizing: border-box;
+  height: 99dvh;
 }
 
 .dashboard-container {
-  width: 99vw;
+  height: 100%;
+  width: 98vw;
   display: flex;
   gap: 10px;
   align-items: stretch;
 }
 
 .home-widget {
-  background-color: #ececec;
-  border-radius: 15px;
+  background-color: #fff;
+  border-radius: 10px;
   position: absolute;
   width: 0%;
   transition: width 300ms ease;
+  box-shadow: rgba(9, 30, 66, 0.25) 0px 1px 1px, rgba(9, 30, 66, 0.13) 0px 0px 1px 1px;
 }
 
 .home-widget-selected {
@@ -68,7 +76,7 @@ img {
 
 .property-form button {
   border: none;
-  background-color: #e2e1ff;
+  background-color: #dbf8e5;
   padding: 12px;
   border-radius: 15px;
   cursor: pointer;
@@ -101,10 +109,11 @@ span.city-tag {
   border: 3px solid #dbf8e5;
   color: #039032;
   padding: 14px 20px;
-  border-radius: 50px;
+  border-radius: 12px;
   cursor: pointer;
   transition: all 0.2s ease-in;
 }
+
 
 span.city-tag.selected {
   background-color: #dbf8e5;
@@ -112,19 +121,41 @@ span.city-tag.selected {
 }
 
 .center-location-button {
+  border: none;
+  background-color: transparent;
   display: flex;
   align-items: center;
-  border: none;
-  background-color: #e2e1ff;
-  padding: 12px;
+  padding: 0 12px;
   border-radius: 15px;
   cursor: pointer;
+}
+
+.center-location-button img {
+  width: 30px;
+  height: 30px;
 }
 
 .crosshair {
   width: 30px;
   height: 30px;
 }
+
+@media (max-width: 767px) {
+  span.city-tag {
+    padding: 10px;
+  }
+
+  .center-location-button {
+    padding: 0 10px;
+    font-size: 10px;
+  }
+
+  .crosshair {
+    width: 20px;
+    height: 20px;
+  }
+}
+
 
 .tools-container {
   display: flex;
@@ -135,7 +166,7 @@ span.city-tag.selected {
   display: flex;
   align-items: center;
   border: none;
-  background-color: #e2e1ff;
+  background-color: #dbf8e5;
   padding: 12px;
   border-radius: 15px;
   cursor: pointer;
@@ -151,29 +182,51 @@ span.city-tag.selected {
   font-optical-sizing: auto;
 }
 
-.address-header {
-  font-size: 1.8rem;
-  color: #353535;
-  font-weight: 700;
-  margin-bottom: 15px;
+.address-container {
+  display: flex;
+  flex-direction: column;
 }
 
+.address {
+  font-size: 1.6rem;
+  color: #363636;
+  font-weight: 700;
+  margin: 0;
+}
+
+@media (max-width: 767px) {
+  .address {
+    font-size: 1.2rem;
+  }
+}
+
+.city-state-zip {
+  font-size: 1.3rem;
+  color: #363636;
+  font-weight: 500;
+  margin: 5px 0;
+}
+
+@media (max-width: 767px) {
+  .city-state-zip {
+    font-size: 1rem;
+  }
+}
 
 .price-subheader {
-  color: #353535;
+  color: #363636;
   font-weight: 600;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   margin-top: 0;
 }
 
-@media (max-width: 992px) {
-  .address-header {
-    font-size: 1.2rem;
-  }
+@media (max-width: 767px) {
   .price-subheader {
-    font-size: 1.1rem;
+    font-size: 1rem;
   }
 }
+
+
 
 .action-buttons {
   display: flex;

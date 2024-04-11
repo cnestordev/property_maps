@@ -37,7 +37,7 @@ function PropertyForm({ propertyData, handleCloseModal, isOpen, handleUpatePosit
 
         setIsLoading(true);
 
-        const jsonBlobUrl = 'https://jsonblob.com/api/jsonBlob/1227039048840634368';
+        const jsonBlobUrl = process.env.REACT_APP_JSON_URL;
 
         try {
             const existingEntry = propertyData.find(property => property.id === formData.id);

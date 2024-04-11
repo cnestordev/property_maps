@@ -5,18 +5,19 @@ import useEmblaCarousel from 'embla-carousel-react';
 import Crosshair from "./images/crosshair.png";
 import GMaps from "./images/google_maps.png";
 import GPS from "./images/gsp.png";
-import BlueMarker from "./images/marker_blue.png";
+import BlueMarker from "./images/marker_green.png";
 import RedMarker from "./images/marker_red.png";
 import PropertyForm from './PropertyForm';
 import Add from "./images/add.png";
+import { PropertyList } from './PropertyList';
 
 const containerStyle = {
     width: '100%',
-    minHeight: '59.8vh',
+    height: '100%',
     borderRadius: '10px'
 };
 
-function Map() {
+function Map({ googleApiKey }) {
     const [position, setPosition] = useState([]);
     const [selectedMarker, setSelectedMarker] = useState(null);
     const [selectedCities, setSelectedCities] = useState([]);
@@ -29,6 +30,241 @@ function Map() {
     const [zoom, setZoom] = useState(10);
     const [showForm, setShowForm] = useState(false);
     const [emblaRef] = useEmblaCarousel();
+
+    const darkModeStyle = [
+        {
+            "elementType": "geometry",
+            "stylers": [
+                {
+                    "color": "#1d2c4d"
+                }
+            ]
+        },
+        {
+            "elementType": "labels.text.fill",
+            "stylers": [
+                {
+                    "color": "#8ec3b9"
+                }
+            ]
+        },
+        {
+            "elementType": "labels.text.stroke",
+            "stylers": [
+                {
+                    "color": "#1a3646"
+                }
+            ]
+        },
+        {
+            "featureType": "administrative.country",
+            "elementType": "geometry.stroke",
+            "stylers": [
+                {
+                    "color": "#4b6878"
+                }
+            ]
+        },
+        {
+            "featureType": "administrative.land_parcel",
+            "elementType": "labels.text.fill",
+            "stylers": [
+                {
+                    "color": "#64779e"
+                }
+            ]
+        },
+        {
+            "featureType": "administrative.province",
+            "elementType": "geometry.stroke",
+            "stylers": [
+                {
+                    "color": "#4b6878"
+                }
+            ]
+        },
+        {
+            "featureType": "landscape.man_made",
+            "elementType": "geometry.stroke",
+            "stylers": [
+                {
+                    "color": "#334e87"
+                }
+            ]
+        },
+        {
+            "featureType": "landscape.natural",
+            "elementType": "geometry",
+            "stylers": [
+                {
+                    "color": "#023e58"
+                }
+            ]
+        },
+        {
+            "featureType": "poi",
+            "elementType": "geometry",
+            "stylers": [
+                {
+                    "color": "#283d6a"
+                }
+            ]
+        },
+        {
+            "featureType": "poi",
+            "elementType": "labels.text.fill",
+            "stylers": [
+                {
+                    "color": "#6f9ba5"
+                }
+            ]
+        },
+        {
+            "featureType": "poi",
+            "elementType": "labels.text.stroke",
+            "stylers": [
+                {
+                    "color": "#1d2c4d"
+                }
+            ]
+        },
+        {
+            "featureType": "poi.park",
+            "elementType": "geometry.fill",
+            "stylers": [
+                {
+                    "color": "#023e58"
+                }
+            ]
+        },
+        {
+            "featureType": "poi.park",
+            "elementType": "labels.text.fill",
+            "stylers": [
+                {
+                    "color": "#3C7680"
+                }
+            ]
+        },
+        {
+            "featureType": "road",
+            "elementType": "geometry",
+            "stylers": [
+                {
+                    "color": "#304a7d"
+                }
+            ]
+        },
+        {
+            "featureType": "road",
+            "elementType": "labels.text.fill",
+            "stylers": [
+                {
+                    "color": "#98a5be"
+                }
+            ]
+        },
+        {
+            "featureType": "road",
+            "elementType": "labels.text.stroke",
+            "stylers": [
+                {
+                    "color": "#1d2c4d"
+                }
+            ]
+        },
+        {
+            "featureType": "road.highway",
+            "elementType": "geometry",
+            "stylers": [
+                {
+                    "color": "#2c6675"
+                }
+            ]
+        },
+        {
+            "featureType": "road.highway",
+            "elementType": "geometry.stroke",
+            "stylers": [
+                {
+                    "color": "#255763"
+                }
+            ]
+        },
+        {
+            "featureType": "road.highway",
+            "elementType": "labels.text.fill",
+            "stylers": [
+                {
+                    "color": "#b0d5ce"
+                }
+            ]
+        },
+        {
+            "featureType": "road.highway",
+            "elementType": "labels.text.stroke",
+            "stylers": [
+                {
+                    "color": "#023e58"
+                }
+            ]
+        },
+        {
+            "featureType": "transit",
+            "elementType": "labels.text.fill",
+            "stylers": [
+                {
+                    "color": "#98a5be"
+                }
+            ]
+        },
+        {
+            "featureType": "transit",
+            "elementType": "labels.text.stroke",
+            "stylers": [
+                {
+                    "color": "#1d2c4d"
+                }
+            ]
+        },
+        {
+            "featureType": "transit.line",
+            "elementType": "geometry.fill",
+            "stylers": [
+                {
+                    "color": "#283d6a"
+                }
+            ]
+        },
+        {
+            "featureType": "transit.station",
+            "elementType": "geometry",
+            "stylers": [
+                {
+                    "color": "#3a4762"
+                }
+            ]
+        },
+        {
+            "featureType": "water",
+            "elementType": "geometry",
+            "stylers": [
+                {
+                    "color": "#0e1626"
+                }
+            ]
+        },
+        {
+            "featureType": "water",
+            "elementType": "labels.text.fill",
+            "stylers": [
+                {
+                    "color": "#4e6d70"
+                }
+            ]
+        }
+    ];
+
 
 
     const toggleCitySelection = (city) => {
@@ -124,9 +360,8 @@ function Map() {
     }) : [];
 
     const getCityCoordinates = async ({ city, state }) => {
-        const apiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
         const address = encodeURIComponent(`${city}, ${state}`);
-        const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${apiKey}`);
+        const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${googleApiKey}`);
 
         if (!response.ok) {
             throw new Error('Failed to geocode address');
@@ -189,8 +424,8 @@ function Map() {
 
 
     return (
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', gap: '20px' }}>
-            <LoadScript libraries={['places']} googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}>
+        <div className='parent-container' style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', gap: '20px' }}>
+            <LoadScript libraries={['places']} googleMapsApiKey={googleApiKey}>
                 <div className='filters-container'>
                     <div className='city-tags-container'>
                         {cities.map((city, index) => (
@@ -201,7 +436,7 @@ function Map() {
                         ))}
                     </div>
                     <div className='tools-container'>
-                        <button className='center-location-button' onClick={handleCenterLocation}><img className='crosshair' src={Crosshair} /> Current Location</button>
+                        <button className='center-location-button' onClick={handleCenterLocation}><img className='crosshair' src={Crosshair} /></button>
                         <button onClick={() => setShowForm(!showForm)} className='add-property-button'><img className='add-property' src={Add} /></button>
                     </div>
                 </div>
@@ -213,6 +448,10 @@ function Map() {
                         zoom={zoom}
                         api_options={["MCYJ5E517XR2JC"]}
                         onClick={handleUnselectedMarker}
+                        options={{
+                            styles: darkModeStyle, // Apply the dark mode style
+                            // Include other map options here
+                        }}
                     >
                         currentLocation && (
                         <Marker
@@ -237,32 +476,14 @@ function Map() {
                         ))}
                     </GoogleMap>
                     <div className={`${selectedMarker ? 'home-widget-selected' : ''} home-widget`}>
-                        {
-                            selectedMarker && (
-                                <div>
-                                    <h2 className='address-header'>{selectedMarker.name}</h2>
-                                    <p className='price-subheader'>${parseInt(selectedMarker.price, 10).toLocaleString()}</p>
-                                    <div onClick={() => handleOpen(selectedMarker.listingUrl)} style={{ cursor: 'pointer' }}>
-                                        <div className="embla" ref={emblaRef}>
-                                            <div className="embla__container">
-                                                {
-                                                    selectedMarker.imageUrls.map((url, index) => (
-                                                        <div className="embla__slide" key={index}><img style={{ width: '100%' }} src={url} alt="Property" /></div>
-                                                    ))
-                                                }
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className='action-buttons'>
-                                        <button className='view-on-google' onClick={() => handleMaps(selectedMarker.location.address)}>
-                                            <img className='gmaps-logo' src={GMaps} />
-                                            View on Google Maps
-                                        </button>
-                                        <button onClick={() => handleUnselectedMarker()}>Add Notes</button>
-                                    </div>
-                                </div>
-                            )
-                        }
+                        <PropertyList
+                            selectedMarker={selectedMarker}
+                            handleUnselectedMarker={handleUnselectedMarker}
+                            handleMaps={handleMaps}
+                            handleOpen={handleOpen}
+                            emblaRef={emblaRef}
+                            GMaps={GMaps}
+                        />
                     </div>
                 </div>
                 {
