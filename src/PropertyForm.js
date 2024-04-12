@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import AddressAutocomplete from './AddressAutocomplete';
 import { ThreeDots } from 'react-loader-spinner';
 
 function PropertyForm({ propertyData, handleCloseModal, isOpen, handleUpatePositions }) {
     console.log(propertyData);
     const [formData, setFormData] = useState({
+        listingUrl: '',
         beds: '',
         baths: '',
         price: '',
@@ -17,9 +18,12 @@ function PropertyForm({ propertyData, handleCloseModal, isOpen, handleUpatePosit
             state: ''
         },
         id: '',
-        name: ''
+        name: '',
+        notes: []
     });
     const [isLoading, setIsLoading] = useState(false);
+    const [currentNote, setCurrentNote] = useState('');
+
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -45,6 +49,12 @@ function PropertyForm({ propertyData, handleCloseModal, isOpen, handleUpatePosit
             let dataToSubmit = propertyData;
 
             if (!existingEntry) {
+                if (currentNote) {
+                    formData.notes.push({
+                        note: currentNote,
+                        id: Date.now()
+                    });
+                }
                 dataToSubmit = [...propertyData, formData];
             } else {
                 return console.log(`An entry with id ${formData.id} already exists.`);
@@ -54,7 +64,8 @@ function PropertyForm({ propertyData, handleCloseModal, isOpen, handleUpatePosit
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Accept': 'application/json'
+                    'Accept': 'application/json',
+                    'X-Master-Key': process.env.REACT_APP_JSON_MASTER_KEY
                 },
                 body: JSON.stringify(dataToSubmit)
             });
@@ -63,7 +74,7 @@ function PropertyForm({ propertyData, handleCloseModal, isOpen, handleUpatePosit
                 console.log('Listing submitted successfully to jsonblob');
 
                 const data = await response.json();
-                handleUpatePositions(data);
+                handleUpatePositions(data.record);
 
             } else {
                 console.error('Failed to submit listing to jsonblob');
@@ -146,6 +157,13 @@ function PropertyForm({ propertyData, handleCloseModal, isOpen, handleUpatePosit
             <form className='property-form'>
                 <AddressAutocomplete onPlaceSelected={onPlaceSelected} />
                 <input
+                    type="text"
+                    name="listingUrl"
+                    placeholder="Listing URL"
+                    value={formData.listingUrl}
+                    onChange={handleChange}
+                />
+                <input
                     type="number"
                     name="beds"
                     placeholder="Beds"
@@ -165,6 +183,12 @@ function PropertyForm({ propertyData, handleCloseModal, isOpen, handleUpatePosit
                     placeholder="Price"
                     value={formData.price}
                     onChange={handleChange}
+                />
+                <textarea
+                    name="notes"
+                    placeholder="Notes"
+                    value={currentNote}
+                    onChange={(e) => setCurrentNote(e.target.value)}
                 />
                 {
                     formData.imageUrls.length > 0 && (

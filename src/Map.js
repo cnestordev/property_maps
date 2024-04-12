@@ -33,62 +33,47 @@ function Map({ googleApiKey }) {
 
     const darkModeStyle = [
         {
-            "elementType": "geometry",
-            "stylers": [
-                {
-                    "color": "#1d2c4d"
-                }
-            ]
-        },
-        {
-            "elementType": "labels.text.fill",
-            "stylers": [
-                {
-                    "color": "#8ec3b9"
-                }
-            ]
-        },
-        {
-            "elementType": "labels.text.stroke",
-            "stylers": [
-                {
-                    "color": "#1a3646"
-                }
-            ]
-        },
-        {
             "featureType": "administrative.country",
-            "elementType": "geometry.stroke",
+            "elementType": "labels.text",
             "stylers": [
                 {
-                    "color": "#4b6878"
-                }
-            ]
-        },
-        {
-            "featureType": "administrative.land_parcel",
-            "elementType": "labels.text.fill",
-            "stylers": [
-                {
-                    "color": "#64779e"
+                    "lightness": "29"
                 }
             ]
         },
         {
             "featureType": "administrative.province",
-            "elementType": "geometry.stroke",
+            "elementType": "labels.text.fill",
             "stylers": [
                 {
-                    "color": "#4b6878"
+                    "lightness": "-12"
+                },
+                {
+                    "color": "#796340"
+                }
+            ]
+        },
+        {
+            "featureType": "administrative.locality",
+            "elementType": "labels.text.fill",
+            "stylers": [
+                {
+                    "lightness": "15"
+                },
+                {
+                    "saturation": "15"
                 }
             ]
         },
         {
             "featureType": "landscape.man_made",
-            "elementType": "geometry.stroke",
+            "elementType": "geometry",
             "stylers": [
                 {
-                    "color": "#334e87"
+                    "visibility": "on"
+                },
+                {
+                    "color": "#fbf5ed"
                 }
             ]
         },
@@ -97,43 +82,103 @@ function Map({ googleApiKey }) {
             "elementType": "geometry",
             "stylers": [
                 {
-                    "color": "#023e58"
+                    "visibility": "on"
+                },
+                {
+                    "color": "#fbf5ed"
                 }
             ]
         },
         {
             "featureType": "poi",
+            "elementType": "labels",
+            "stylers": [
+                {
+                    "visibility": "off"
+                }
+            ]
+        },
+        {
+            "featureType": "poi.attraction",
+            "elementType": "all",
+            "stylers": [
+                {
+                    "visibility": "on"
+                },
+                {
+                    "lightness": "30"
+                },
+                {
+                    "saturation": "-41"
+                },
+                {
+                    "gamma": "0.84"
+                }
+            ]
+        },
+        {
+            "featureType": "poi.attraction",
+            "elementType": "labels",
+            "stylers": [
+                {
+                    "visibility": "on"
+                }
+            ]
+        },
+        {
+            "featureType": "poi.business",
+            "elementType": "all",
+            "stylers": [
+                {
+                    "visibility": "off"
+                }
+            ]
+        },
+        {
+            "featureType": "poi.business",
+            "elementType": "labels",
+            "stylers": [
+                {
+                    "visibility": "off"
+                }
+            ]
+        },
+        {
+            "featureType": "poi.medical",
             "elementType": "geometry",
             "stylers": [
                 {
-                    "color": "#283d6a"
+                    "color": "#fbd3da"
                 }
             ]
         },
         {
-            "featureType": "poi",
-            "elementType": "labels.text.fill",
+            "featureType": "poi.medical",
+            "elementType": "labels",
             "stylers": [
                 {
-                    "color": "#6f9ba5"
-                }
-            ]
-        },
-        {
-            "featureType": "poi",
-            "elementType": "labels.text.stroke",
-            "stylers": [
-                {
-                    "color": "#1d2c4d"
+                    "visibility": "on"
                 }
             ]
         },
         {
             "featureType": "poi.park",
-            "elementType": "geometry.fill",
+            "elementType": "geometry",
             "stylers": [
                 {
-                    "color": "#023e58"
+                    "color": "#b0e9ac"
+                },
+                {
+                    "visibility": "on"
+                }
+            ]
+        },
+        {
+            "featureType": "poi.park",
+            "elementType": "labels",
+            "stylers": [
+                {
+                    "visibility": "on"
                 }
             ]
         },
@@ -142,43 +187,79 @@ function Map({ googleApiKey }) {
             "elementType": "labels.text.fill",
             "stylers": [
                 {
-                    "color": "#3C7680"
+                    "hue": "#68ff00"
+                },
+                {
+                    "lightness": "-24"
+                },
+                {
+                    "gamma": "1.59"
                 }
             ]
         },
         {
-            "featureType": "road",
+            "featureType": "poi.sports_complex",
+            "elementType": "all",
+            "stylers": [
+                {
+                    "visibility": "on"
+                }
+            ]
+        },
+        {
+            "featureType": "poi.sports_complex",
             "elementType": "geometry",
             "stylers": [
                 {
-                    "color": "#304a7d"
+                    "saturation": "10"
+                },
+                {
+                    "color": "#c3eb9a"
                 }
             ]
         },
         {
             "featureType": "road",
-            "elementType": "labels.text.fill",
+            "elementType": "geometry.stroke",
             "stylers": [
                 {
-                    "color": "#98a5be"
+                    "visibility": "on"
+                },
+                {
+                    "lightness": "30"
+                },
+                {
+                    "color": "#e7ded6"
                 }
             ]
         },
         {
             "featureType": "road",
-            "elementType": "labels.text.stroke",
+            "elementType": "labels",
             "stylers": [
                 {
-                    "color": "#1d2c4d"
+                    "visibility": "on"
+                },
+                {
+                    "saturation": "-39"
+                },
+                {
+                    "lightness": "28"
+                },
+                {
+                    "gamma": "0.86"
                 }
             ]
         },
         {
             "featureType": "road.highway",
-            "elementType": "geometry",
+            "elementType": "geometry.fill",
             "stylers": [
                 {
-                    "color": "#2c6675"
+                    "color": "#ffe523"
+                },
+                {
+                    "visibility": "on"
                 }
             ]
         },
@@ -187,61 +268,94 @@ function Map({ googleApiKey }) {
             "elementType": "geometry.stroke",
             "stylers": [
                 {
-                    "color": "#255763"
+                    "visibility": "on"
+                },
+                {
+                    "saturation": "0"
+                },
+                {
+                    "gamma": "1.44"
+                },
+                {
+                    "color": "#fbc28b"
                 }
             ]
         },
         {
             "featureType": "road.highway",
-            "elementType": "labels.text.fill",
+            "elementType": "labels",
             "stylers": [
                 {
-                    "color": "#b0d5ce"
+                    "visibility": "on"
+                },
+                {
+                    "saturation": "-40"
                 }
             ]
         },
         {
-            "featureType": "road.highway",
-            "elementType": "labels.text.stroke",
+            "featureType": "road.arterial",
+            "elementType": "geometry",
             "stylers": [
                 {
-                    "color": "#023e58"
+                    "color": "#fed7a5"
                 }
             ]
         },
         {
-            "featureType": "transit",
-            "elementType": "labels.text.fill",
-            "stylers": [
-                {
-                    "color": "#98a5be"
-                }
-            ]
-        },
-        {
-            "featureType": "transit",
-            "elementType": "labels.text.stroke",
-            "stylers": [
-                {
-                    "color": "#1d2c4d"
-                }
-            ]
-        },
-        {
-            "featureType": "transit.line",
+            "featureType": "road.arterial",
             "elementType": "geometry.fill",
             "stylers": [
                 {
-                    "color": "#283d6a"
+                    "visibility": "on"
+                },
+                {
+                    "gamma": "1.54"
+                },
+                {
+                    "color": "#fbe38b"
                 }
             ]
         },
         {
-            "featureType": "transit.station",
-            "elementType": "geometry",
+            "featureType": "road.local",
+            "elementType": "geometry.fill",
             "stylers": [
                 {
-                    "color": "#3a4762"
+                    "color": "#ffffff"
+                },
+                {
+                    "visibility": "on"
+                },
+                {
+                    "gamma": "2.62"
+                },
+                {
+                    "lightness": "10"
+                }
+            ]
+        },
+        {
+            "featureType": "road.local",
+            "elementType": "geometry.stroke",
+            "stylers": [
+                {
+                    "visibility": "on"
+                },
+                {
+                    "weight": "0.50"
+                },
+                {
+                    "gamma": "1.04"
+                }
+            ]
+        },
+        {
+            "featureType": "transit.station.airport",
+            "elementType": "geometry.fill",
+            "stylers": [
+                {
+                    "color": "#dee3fb"
                 }
             ]
         },
@@ -250,22 +364,14 @@ function Map({ googleApiKey }) {
             "elementType": "geometry",
             "stylers": [
                 {
-                    "color": "#0e1626"
-                }
-            ]
-        },
-        {
-            "featureType": "water",
-            "elementType": "labels.text.fill",
-            "stylers": [
+                    "saturation": "46"
+                },
                 {
-                    "color": "#4e6d70"
+                    "color": "#a4e1ff"
                 }
             ]
         }
     ];
-
-
 
     const toggleCitySelection = (city) => {
         setSelectedCities(prevSelectedCities => {
@@ -280,9 +386,15 @@ function Map({ googleApiKey }) {
     };
 
     const getData = async () => {
-        const res = await fetch(process.env.REACT_APP_JSON_URL);
-        const data = await res.json();
-        setPosition(data);
+        const headers = {
+            'X-Master-Key': process.env.REACT_APP_JSON_MASTER_KEY,
+            'Content-Type': 'application/json'
+        };
+        
+        const response = await fetch(process.env.REACT_APP_JSON_URL, { headers });
+        
+        const data = await response.json();
+        setPosition(data.record);
     };
 
     useEffect(() => {
@@ -292,7 +404,6 @@ function Map({ googleApiKey }) {
 
     useEffect(() => {
         if (position) {
-            console.log("%c position has changed!", "color: red");
             const uniqueCities = async (locations) => {
                 const result = [];
                 const seenCities = new Set();
@@ -370,7 +481,6 @@ function Map({ googleApiKey }) {
         const data = await response.json();
         if (data.results && data.results.length > 0) {
             const location = data.results[0].geometry.location;
-            console.log(location);
             return location;
         }
 
@@ -386,7 +496,7 @@ function Map({ googleApiKey }) {
         console.log(marker);
         const centerCoords = { lat: marker.location.lat, lng: marker.location.lng };
         setCenter(centerCoords);
-        setZoom(12.5);
+        setZoom(16.5);
         setSelectedMarker(marker);
     };
 
@@ -483,6 +593,8 @@ function Map({ googleApiKey }) {
                             handleOpen={handleOpen}
                             emblaRef={emblaRef}
                             GMaps={GMaps}
+                            propertyData={position}
+                            handleUpatePositions={handleUpatePositions}
                         />
                     </div>
                 </div>
@@ -491,7 +603,6 @@ function Map({ googleApiKey }) {
                         <PropertyForm
                             handleUnselectedMarker={handleUnselectedMarker}
                             propertyData={position}
-                            setShowForm={setShowForm}
                             isOpen={showForm}
                             handleCloseModal={setShowForm}
                             handleUpatePositions={handleUpatePositions}
