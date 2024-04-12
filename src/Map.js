@@ -9,6 +9,7 @@ import BlueMarker from "./images/marker_green.png";
 import RedMarker from "./images/marker_red.png";
 import PropertyForm from './PropertyForm';
 import Add from "./images/add.png";
+import Chevron from "./images/chevron.png";
 import { PropertyList } from './PropertyList';
 
 const containerStyle = {
@@ -534,7 +535,7 @@ function Map({ googleApiKey }) {
 
 
     return (
-        <div className='parent-container' style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', gap: '20px' }}>
+        <div className='parent-container'>
             <LoadScript libraries={['places']} googleMapsApiKey={googleApiKey}>
                 <div className='filters-container'>
                     <div className='city-tags-container'>
@@ -548,6 +549,9 @@ function Map({ googleApiKey }) {
                     <div className='tools-container'>
                         <button className='center-location-button' onClick={handleCenterLocation}><img className='crosshair' src={Crosshair} /></button>
                         <button onClick={() => setShowForm(!showForm)} className='add-property-button'><img className='add-property' src={Add} /></button>
+                    </div>
+                    <div className='nav-icon-container'>
+                        <img className='nav-icon' src={Chevron} />
                     </div>
                 </div>
 

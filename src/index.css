@@ -4,8 +4,13 @@ body {
 }
 
 .parent-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
   box-sizing: border-box;
   height: 99dvh;
+  width: 100%;
 }
 
 .dashboard-container {
@@ -43,6 +48,25 @@ img {
   padding: 15px;
   display: flex;
   align-items: center;
+  width: 100%;
+  justify-content: center;
+  gap: 15px;
+  position: relative;
+}
+
+
+.nav-icon-container {
+  position: absolute;
+  right: 3%;
+  transform: rotate(-180deg);
+  top: 20%;
+  z-index: 3;
+}
+
+.nav-icon-container .nav-icon {
+  width: 38px;
+  background-color: #d5ffcc;
+  padding: 8px;
 }
 
 .property-form-container {
