@@ -1,22 +1,217 @@
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
-import React, { useEffect, useState } from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
+import React, { useEffect, useState } from 'react';
 
+import PropertyForm from './PropertyForm';
+import { PropertyList } from './PropertyList';
+import Add from "./images/add.png";
+import Contrast from "./images/contrast.png";
 import Crosshair from "./images/crosshair.png";
 import GMaps from "./images/google_maps.png";
 import GPS from "./images/gsp.png";
 import BlueMarker from "./images/marker_green.png";
 import RedMarker from "./images/marker_red.png";
-import PropertyForm from './PropertyForm';
-import Add from "./images/add.png";
-import Chevron from "./images/chevron.png";
-import { PropertyList } from './PropertyList';
 
 const containerStyle = {
     width: '100%',
     height: '100%',
-    borderRadius: '10px'
+    borderRadius: '10px',
+    position: 'relative'
 };
+
+const darkModeStyle = [
+    {
+        "featureType": "all",
+        "elementType": "all",
+        "stylers": [
+            {
+                "invert_lightness": true
+            },
+            {
+                "saturation": "-9"
+            },
+            {
+                "lightness": "0"
+            },
+            {
+                "visibility": "simplified"
+            }
+        ]
+    },
+    {
+        "featureType": "landscape.man_made",
+        "elementType": "all",
+        "stylers": [
+            {
+                "weight": "1.00"
+            }
+        ]
+    },
+    {
+        "featureType": "road.highway",
+        "elementType": "all",
+        "stylers": [
+            {
+                "weight": "0.49"
+            }
+        ]
+    },
+    {
+        "featureType": "road.highway",
+        "elementType": "labels",
+        "stylers": [
+            {
+                "visibility": "on"
+            },
+            {
+                "weight": "0.01"
+            },
+            {
+                "lightness": "-7"
+            },
+            {
+                "saturation": "-35"
+            }
+        ]
+    },
+    {
+        "featureType": "road.highway",
+        "elementType": "labels.text",
+        "stylers": [
+            {
+                "visibility": "on"
+            }
+        ]
+    },
+    {
+        "featureType": "road.highway",
+        "elementType": "labels.text.stroke",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "road.highway",
+        "elementType": "labels.icon",
+        "stylers": [
+            {
+                "visibility": "on"
+            }
+        ]
+    }
+];
+
+const lightModeStyle = [
+    {
+        "featureType": "all",
+        "elementType": "all",
+        "stylers": [
+            {
+                "saturation": "32"
+            },
+            {
+                "lightness": "-3"
+            },
+            {
+                "visibility": "on"
+            },
+            {
+                "weight": "1.18"
+            }
+        ]
+    },
+    {
+        "featureType": "administrative",
+        "elementType": "labels",
+        "stylers": [
+            {
+                "visibility": "on"
+            }
+        ]
+    },
+    {
+        "featureType": "landscape",
+        "elementType": "labels",
+        "stylers": [
+            {
+                "visibility": "on"
+            }
+        ]
+    },
+    {
+        "featureType": "landscape.man_made",
+        "elementType": "all",
+        "stylers": [
+            {
+                "saturation": "-70"
+            },
+            {
+                "lightness": "14"
+            }
+        ]
+    },
+    {
+        "featureType": "poi",
+        "elementType": "labels",
+        "stylers": [
+            {
+                "visibility": "on"
+            }
+        ]
+    },
+    {
+        "featureType": "road",
+        "elementType": "labels",
+        "stylers": [
+            {
+                "visibility": "on"
+            }
+        ]
+    },
+    {
+        "featureType": "transit",
+        "elementType": "labels",
+        "stylers": [
+            {
+                "visibility": "on"
+            }
+        ]
+    },
+    {
+        "featureType": "water",
+        "elementType": "all",
+        "stylers": [
+            {
+                "saturation": "100"
+            },
+            {
+                "lightness": "-14"
+            }
+        ]
+    },
+    {
+        "featureType": "water",
+        "elementType": "labels",
+        "stylers": [
+            {
+                "visibility": "on"
+            },
+            {
+                "lightness": "12"
+            }
+        ]
+    }
+];
+
+
+const centerLatLng = {
+    lat: 33.20384585565068,
+    lng: -96.72912847616412
+};
+
+const libraries = ["places"];
 
 function Map({ googleApiKey }) {
     const [position, setPosition] = useState([]);
@@ -24,355 +219,11 @@ function Map({ googleApiKey }) {
     const [selectedCities, setSelectedCities] = useState([]);
     const [currentLocation, setCurrentLocation] = useState(null);
     const [cities, setCities] = useState([]);
-    const [center, setCenter] = useState({
-        lat: 33.20384585565068,
-        lng: -96.72912847616412
-    });
+    const [center, setCenter] = useState(centerLatLng);
     const [zoom, setZoom] = useState(10);
     const [showForm, setShowForm] = useState(false);
     const [emblaRef] = useEmblaCarousel();
-
-    const darkModeStyle = [
-        {
-            "featureType": "administrative.country",
-            "elementType": "labels.text",
-            "stylers": [
-                {
-                    "lightness": "29"
-                }
-            ]
-        },
-        {
-            "featureType": "administrative.province",
-            "elementType": "labels.text.fill",
-            "stylers": [
-                {
-                    "lightness": "-12"
-                },
-                {
-                    "color": "#796340"
-                }
-            ]
-        },
-        {
-            "featureType": "administrative.locality",
-            "elementType": "labels.text.fill",
-            "stylers": [
-                {
-                    "lightness": "15"
-                },
-                {
-                    "saturation": "15"
-                }
-            ]
-        },
-        {
-            "featureType": "landscape.man_made",
-            "elementType": "geometry",
-            "stylers": [
-                {
-                    "visibility": "on"
-                },
-                {
-                    "color": "#fbf5ed"
-                }
-            ]
-        },
-        {
-            "featureType": "landscape.natural",
-            "elementType": "geometry",
-            "stylers": [
-                {
-                    "visibility": "on"
-                },
-                {
-                    "color": "#fbf5ed"
-                }
-            ]
-        },
-        {
-            "featureType": "poi",
-            "elementType": "labels",
-            "stylers": [
-                {
-                    "visibility": "off"
-                }
-            ]
-        },
-        {
-            "featureType": "poi.attraction",
-            "elementType": "all",
-            "stylers": [
-                {
-                    "visibility": "on"
-                },
-                {
-                    "lightness": "30"
-                },
-                {
-                    "saturation": "-41"
-                },
-                {
-                    "gamma": "0.84"
-                }
-            ]
-        },
-        {
-            "featureType": "poi.attraction",
-            "elementType": "labels",
-            "stylers": [
-                {
-                    "visibility": "on"
-                }
-            ]
-        },
-        {
-            "featureType": "poi.business",
-            "elementType": "all",
-            "stylers": [
-                {
-                    "visibility": "off"
-                }
-            ]
-        },
-        {
-            "featureType": "poi.business",
-            "elementType": "labels",
-            "stylers": [
-                {
-                    "visibility": "off"
-                }
-            ]
-        },
-        {
-            "featureType": "poi.medical",
-            "elementType": "geometry",
-            "stylers": [
-                {
-                    "color": "#fbd3da"
-                }
-            ]
-        },
-        {
-            "featureType": "poi.medical",
-            "elementType": "labels",
-            "stylers": [
-                {
-                    "visibility": "on"
-                }
-            ]
-        },
-        {
-            "featureType": "poi.park",
-            "elementType": "geometry",
-            "stylers": [
-                {
-                    "color": "#b0e9ac"
-                },
-                {
-                    "visibility": "on"
-                }
-            ]
-        },
-        {
-            "featureType": "poi.park",
-            "elementType": "labels",
-            "stylers": [
-                {
-                    "visibility": "on"
-                }
-            ]
-        },
-        {
-            "featureType": "poi.park",
-            "elementType": "labels.text.fill",
-            "stylers": [
-                {
-                    "hue": "#68ff00"
-                },
-                {
-                    "lightness": "-24"
-                },
-                {
-                    "gamma": "1.59"
-                }
-            ]
-        },
-        {
-            "featureType": "poi.sports_complex",
-            "elementType": "all",
-            "stylers": [
-                {
-                    "visibility": "on"
-                }
-            ]
-        },
-        {
-            "featureType": "poi.sports_complex",
-            "elementType": "geometry",
-            "stylers": [
-                {
-                    "saturation": "10"
-                },
-                {
-                    "color": "#c3eb9a"
-                }
-            ]
-        },
-        {
-            "featureType": "road",
-            "elementType": "geometry.stroke",
-            "stylers": [
-                {
-                    "visibility": "on"
-                },
-                {
-                    "lightness": "30"
-                },
-                {
-                    "color": "#e7ded6"
-                }
-            ]
-        },
-        {
-            "featureType": "road",
-            "elementType": "labels",
-            "stylers": [
-                {
-                    "visibility": "on"
-                },
-                {
-                    "saturation": "-39"
-                },
-                {
-                    "lightness": "28"
-                },
-                {
-                    "gamma": "0.86"
-                }
-            ]
-        },
-        {
-            "featureType": "road.highway",
-            "elementType": "geometry.fill",
-            "stylers": [
-                {
-                    "color": "#ffe523"
-                },
-                {
-                    "visibility": "on"
-                }
-            ]
-        },
-        {
-            "featureType": "road.highway",
-            "elementType": "geometry.stroke",
-            "stylers": [
-                {
-                    "visibility": "on"
-                },
-                {
-                    "saturation": "0"
-                },
-                {
-                    "gamma": "1.44"
-                },
-                {
-                    "color": "#fbc28b"
-                }
-            ]
-        },
-        {
-            "featureType": "road.highway",
-            "elementType": "labels",
-            "stylers": [
-                {
-                    "visibility": "on"
-                },
-                {
-                    "saturation": "-40"
-                }
-            ]
-        },
-        {
-            "featureType": "road.arterial",
-            "elementType": "geometry",
-            "stylers": [
-                {
-                    "color": "#fed7a5"
-                }
-            ]
-        },
-        {
-            "featureType": "road.arterial",
-            "elementType": "geometry.fill",
-            "stylers": [
-                {
-                    "visibility": "on"
-                },
-                {
-                    "gamma": "1.54"
-                },
-                {
-                    "color": "#fbe38b"
-                }
-            ]
-        },
-        {
-            "featureType": "road.local",
-            "elementType": "geometry.fill",
-            "stylers": [
-                {
-                    "color": "#ffffff"
-                },
-                {
-                    "visibility": "on"
-                },
-                {
-                    "gamma": "2.62"
-                },
-                {
-                    "lightness": "10"
-                }
-            ]
-        },
-        {
-            "featureType": "road.local",
-            "elementType": "geometry.stroke",
-            "stylers": [
-                {
-                    "visibility": "on"
-                },
-                {
-                    "weight": "0.50"
-                },
-                {
-                    "gamma": "1.04"
-                }
-            ]
-        },
-        {
-            "featureType": "transit.station.airport",
-            "elementType": "geometry.fill",
-            "stylers": [
-                {
-                    "color": "#dee3fb"
-                }
-            ]
-        },
-        {
-            "featureType": "water",
-            "elementType": "geometry",
-            "stylers": [
-                {
-                    "saturation": "46"
-                },
-                {
-                    "color": "#a4e1ff"
-                }
-            ]
-        }
-    ];
+    const [isDarkMode, setIsDarkMode] = useState(false);
 
     const toggleCitySelection = (city) => {
         setSelectedCities(prevSelectedCities => {
@@ -391,9 +242,9 @@ function Map({ googleApiKey }) {
             'X-Master-Key': process.env.REACT_APP_JSON_MASTER_KEY,
             'Content-Type': 'application/json'
         };
-        
+
         const response = await fetch(process.env.REACT_APP_JSON_URL, { headers });
-        
+
         const data = await response.json();
         setPosition(data.record);
     };
@@ -438,10 +289,7 @@ function Map({ googleApiKey }) {
                 setZoom(11.5);
             }
         } else {
-            setCenter({
-                lat: 33.20384585565068,
-                lng: -96.72912847616412
-            });
+            setCenter(centerLatLng);
             setZoom(10);
         }
     }, [selectedCities]);
@@ -536,37 +384,34 @@ function Map({ googleApiKey }) {
 
     return (
         <div className='parent-container'>
-            <LoadScript libraries={['places']} googleMapsApiKey={googleApiKey}>
-                <div className='filters-container'>
-                    <div className='city-tags-container'>
-                        {cities.map((city, index) => (
-                            <span key={index} onClick={() => toggleCitySelection(city)}
-                                className={`city-tag ${selectedCities.includes(city.city) ? 'selected' : ''}`}>
-                                {city.city}
-                            </span>
-                        ))}
-                    </div>
-                    <div className='tools-container'>
-                        <button className='center-location-button' onClick={handleCenterLocation}><img className='crosshair' src={Crosshair} /></button>
-                        <button onClick={() => setShowForm(!showForm)} className='add-property-button'><img className='add-property' src={Add} /></button>
-                    </div>
-                    <div className='nav-icon-container'>
-                        <img className='nav-icon' src={Chevron} />
-                    </div>
-                </div>
-
+            <LoadScript libraries={libraries} googleMapsApiKey={googleApiKey}>
                 <div className='dashboard-container'>
                     <GoogleMap
                         mapContainerStyle={containerStyle}
                         center={center}
                         zoom={zoom}
-                        api_options={["MCYJ5E517XR2JC"]}
                         onClick={handleUnselectedMarker}
                         options={{
-                            styles: darkModeStyle, // Apply the dark mode style
-                            // Include other map options here
+                            styles: isDarkMode ? darkModeStyle : lightModeStyle
                         }}
                     >
+                        <div className='filters-container'>
+                            <div className='city-tags-container'>
+                                {cities.map((city, index) => (
+                                    <span key={index} onClick={() => toggleCitySelection(city)}
+                                        className={`city-tag ${selectedCities.includes(city.city) ? 'selected' : ''}`}>
+                                        {city.city}
+                                    </span>
+                                ))}
+                            </div>
+                            <div className='tools-container'>
+                                <button className='center-location-button' onClick={handleCenterLocation}><img className='crosshair' src={Crosshair} /></button>
+                                <button onClick={() => setShowForm(!showForm)} className='add-property-button'><img className='add-property' src={Add} /></button>
+                            </div>
+                            <div onClick={() => setIsDarkMode(!isDarkMode)} className='nav-icon-container'>
+                                <img className='nav-icon' src={Contrast} />
+                            </div>
+                        </div>
                         currentLocation && (
                         <Marker
                             position={currentLocation}

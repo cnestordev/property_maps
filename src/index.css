@@ -38,29 +38,18 @@ body {
   padding: 15px;
 }
 
-img {
-  border-radius: 15px;
-}
-
 .filters-container {
   background-color: #fff;
-  border-radius: 10px;
-  padding: 15px;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
   display: flex;
   align-items: center;
   width: 100%;
-  justify-content: center;
+  justify-content: space-between;
   gap: 15px;
-  position: relative;
-}
-
-
-.nav-icon-container {
   position: absolute;
-  right: 3%;
-  transform: rotate(-180deg);
-  top: 20%;
-  z-index: 3;
+  bottom: 0;
+  z-index: 2;
 }
 
 .nav-icon-container .nav-icon {
@@ -126,7 +115,9 @@ img {
 .city-tags-container {
   padding: 10px;
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
   gap: 5px;
 }
 
