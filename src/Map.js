@@ -9,8 +9,8 @@ import { CgDarkMode } from "react-icons/cg";
 import { TbGps } from "react-icons/tb";
 import GMaps from "./images/google_maps.png";
 import GPS from "./images/gsp.png";
-import BlueMarker from "./images/marker_blue.png";
-import RedMarker from "./images/marker_red.png";
+import BlueMarker from "./images/marker_green.png";
+import RedMarker from "./images/marker_pink.png";
 
 const containerStyle = {
     width: '100%',
@@ -22,197 +22,45 @@ const containerStyle = {
 const darkModeStyle = [
     {
         "featureType": "all",
-        "elementType": "labels.text.fill",
+        "elementType": "all",
         "stylers": [
             {
-                "saturation": 36
+                "invert_lightness": true
             },
             {
-                "color": "#000000"
+                "saturation": 10
             },
             {
-                "lightness": 40
-            }
-        ]
-    },
-    {
-        "featureType": "all",
-        "elementType": "labels.text.stroke",
-        "stylers": [
-            {
-                "visibility": "on"
+                "lightness": 30
             },
             {
-                "color": "#000000"
+                "gamma": 0.5
             },
             {
-                "lightness": 16
-            }
-        ]
-    },
-    {
-        "featureType": "all",
-        "elementType": "labels.icon",
-        "stylers": [
-            {
-                "visibility": "off"
-            }
-        ]
-    },
-    {
-        "featureType": "administrative",
-        "elementType": "geometry.fill",
-        "stylers": [
-            {
-                "color": "#000000"
-            },
-            {
-                "lightness": 20
-            }
-        ]
-    },
-    {
-        "featureType": "administrative",
-        "elementType": "geometry.stroke",
-        "stylers": [
-            {
-                "color": "#000000"
-            },
-            {
-                "lightness": 17
-            },
-            {
-                "weight": 1.2
-            }
-        ]
-    },
-    {
-        "featureType": "landscape",
-        "elementType": "geometry",
-        "stylers": [
-            {
-                "color": "#000000"
-            },
-            {
-                "lightness": 20
-            }
-        ]
-    },
-    {
-        "featureType": "landscape",
-        "elementType": "geometry.fill",
-        "stylers": [
-            {
-                "color": "#203c44"
-            }
-        ]
-    },
-    {
-        "featureType": "poi",
-        "elementType": "geometry",
-        "stylers": [
-            {
-                "color": "#000000"
-            },
-            {
-                "lightness": 21
-            }
-        ]
-    },
-    {
-        "featureType": "poi",
-        "elementType": "geometry.fill",
-        "stylers": [
-            {
-                "color": "#2b4b4e"
-            }
-        ]
-    },
-    {
-        "featureType": "road.highway",
-        "elementType": "geometry.fill",
-        "stylers": [
-            {
-                "color": "#000000"
-            },
-            {
-                "lightness": 17
-            }
-        ]
-    },
-    {
-        "featureType": "road.highway",
-        "elementType": "geometry.stroke",
-        "stylers": [
-            {
-                "color": "#000000"
-            },
-            {
-                "lightness": 29
-            },
-            {
-                "weight": 0.2
+                "hue": "#435158"
             }
         ]
     },
     {
         "featureType": "road.arterial",
-        "elementType": "geometry",
+        "elementType": "all",
         "stylers": [
             {
-                "color": "#000000"
-            },
-            {
-                "lightness": 18
+                "visibility": "simplified"
             }
         ]
     },
     {
-        "featureType": "road.local",
-        "elementType": "geometry",
+        "featureType": "transit.station",
+        "elementType": "labels.text",
         "stylers": [
             {
-                "color": "#000000"
-            },
-            {
-                "lightness": 16
-            }
-        ]
-    },
-    {
-        "featureType": "transit",
-        "elementType": "geometry",
-        "stylers": [
-            {
-                "color": "#000000"
-            },
-            {
-                "lightness": 19
-            }
-        ]
-    },
-    {
-        "featureType": "water",
-        "elementType": "geometry",
-        "stylers": [
-            {
-                "color": "#1b1f2f"
-            },
-            {
-                "lightness": 17
-            }
-        ]
-    },
-    {
-        "featureType": "water",
-        "elementType": "geometry.fill",
-        "stylers": [
-            {
-                "color": "#2a5e64"
+                "visibility": "off"
             }
         ]
     }
 ];
+
 
 
 const lightModeStyle = [
@@ -239,7 +87,43 @@ const lightModeStyle = [
         "elementType": "labels",
         "stylers": [
             {
-                "visibility": "on"
+                "visibility": "simplified"
+            }
+        ]
+    },
+    {
+        "featureType": "administrative.locality",
+        "elementType": "labels",
+        "stylers": [
+            {
+                "visibility": "simplified"
+            }
+        ]
+    },
+    {
+        "featureType": "administrative.locality",
+        "elementType": "labels.text",
+        "stylers": [
+            {
+                "visibility": "simplified"
+            }
+        ]
+    },
+    {
+        "featureType": "administrative.neighborhood",
+        "elementType": "labels",
+        "stylers": [
+            {
+                "visibility": "simplified"
+            }
+        ]
+    },
+    {
+        "featureType": "administrative.neighborhood",
+        "elementType": "labels.text",
+        "stylers": [
+            {
+                "visibility": "simplified"
             }
         ]
     },
@@ -248,7 +132,7 @@ const lightModeStyle = [
         "elementType": "labels",
         "stylers": [
             {
-                "visibility": "on"
+                "visibility": "off"
             }
         ]
     },
@@ -266,7 +150,115 @@ const lightModeStyle = [
     },
     {
         "featureType": "poi",
+        "elementType": "all",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "poi.attraction",
+        "elementType": "all",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "poi.business",
+        "elementType": "labels.text",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "poi.business",
+        "elementType": "labels.icon",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "poi.medical",
         "elementType": "labels",
+        "stylers": [
+            {
+                "visibility": "simplified"
+            }
+        ]
+    },
+    {
+        "featureType": "poi.medical",
+        "elementType": "labels.text",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "poi.medical",
+        "elementType": "labels.icon",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "poi.park",
+        "elementType": "labels.text.fill",
+        "stylers": [
+            {
+                "visibility": "simplified"
+            }
+        ]
+    },
+    {
+        "featureType": "poi.park",
+        "elementType": "labels.icon",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "poi.school",
+        "elementType": "labels.text",
+        "stylers": [
+            {
+                "visibility": "simplified"
+            }
+        ]
+    },
+    {
+        "featureType": "road",
+        "elementType": "labels",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "road.highway",
+        "elementType": "labels.text",
+        "stylers": [
+            {
+                "visibility": "simplified"
+            }
+        ]
+    },
+    {
+        "featureType": "road.highway",
+        "elementType": "labels.icon",
         "stylers": [
             {
                 "visibility": "on"
@@ -274,8 +266,53 @@ const lightModeStyle = [
         ]
     },
     {
-        "featureType": "road",
-        "elementType": "labels",
+        "featureType": "road.highway.controlled_access",
+        "elementType": "labels.text",
+        "stylers": [
+            {
+                "visibility": "simplified"
+            }
+        ]
+    },
+    {
+        "featureType": "road.highway.controlled_access",
+        "elementType": "labels.icon",
+        "stylers": [
+            {
+                "visibility": "simplified"
+            }
+        ]
+    },
+    {
+        "featureType": "road.arterial",
+        "elementType": "labels.text",
+        "stylers": [
+            {
+                "visibility": "simplified"
+            }
+        ]
+    },
+    {
+        "featureType": "road.arterial",
+        "elementType": "labels.icon",
+        "stylers": [
+            {
+                "visibility": "on"
+            }
+        ]
+    },
+    {
+        "featureType": "road.local",
+        "elementType": "labels.text",
+        "stylers": [
+            {
+                "visibility": "simplified"
+            }
+        ]
+    },
+    {
+        "featureType": "road.local",
+        "elementType": "labels.icon",
         "stylers": [
             {
                 "visibility": "on"
@@ -287,7 +324,16 @@ const lightModeStyle = [
         "elementType": "labels",
         "stylers": [
             {
-                "visibility": "on"
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "transit.station.airport",
+        "elementType": "labels.text",
+        "stylers": [
+            {
+                "visibility": "simplified"
             }
         ]
     },
@@ -308,7 +354,7 @@ const lightModeStyle = [
         "elementType": "labels",
         "stylers": [
             {
-                "visibility": "on"
+                "visibility": "off"
             },
             {
                 "lightness": "12"
@@ -316,6 +362,7 @@ const lightModeStyle = [
         ]
     }
 ];
+
 
 
 const centerLatLng = {
@@ -356,18 +403,18 @@ function Map({ googleApiKey }) {
             'X-Master-Key': process.env.REACT_APP_JSON_MASTER_KEY,
             'Content-Type': 'application/json'
         };
-    
+
         const promiseOne = fetch(process.env.REACT_APP_JSON_URL, { headers });
         const promiseTwo = fetch(process.env.REACT_APP_JSON_COORDS, { headers });
-    
+
         const [responseOne, responseTwo] = await Promise.all([promiseOne, promiseTwo]);
         const dataOne = await responseOne.json();
         const dataTwo = await responseTwo.json();
-    
+
         setPosition(dataOne.record);
-        setCities(dataTwo.record)
+        setCities(dataTwo.record);
     };
-    
+
 
     useEffect(() => {
         getData();
@@ -511,8 +558,8 @@ function Map({ googleApiKey }) {
                                 key={index}
                                 position={pos.location}
                                 icon={{
-                                    url: selectedMarker?.id === pos.id ? BlueMarker : RedMarker,
-                                    scaledSize: { width: 35, height: 35 },
+                                    url: selectedMarker?.id === pos.id ? RedMarker : BlueMarker,
+                                    scaledSize: { width: 50, height: 50 },
                                 }}
                             />
                         ))}
