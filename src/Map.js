@@ -1,6 +1,6 @@
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import useEmblaCarousel from 'embla-carousel-react';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 import PropertyForm from './PropertyForm';
 import { PropertyList } from './PropertyList';
@@ -337,38 +337,6 @@ function Map({ googleApiKey }) {
     const [emblaRef] = useEmblaCarousel();
     const [isDarkMode, setIsDarkMode] = useState(false);
 
-    useEffect(() => {
-        const fetchUniqueCities = async (locations) => {
-            const result = [];
-            const seenCities = new Set();
-
-            for (const { location: { city, state } } of locations) {
-                if (!seenCities.has(city)) {
-                    try {
-                        let coords = await getCityCoordinates({ city, state });
-                        seenCities.add(city);
-                        result.push({ city, state, coords });
-                    } catch (error) {
-                        console.error("Error fetching coordinates for city:", city, error);
-                    }
-                }
-            }
-            return result;
-        };
-
-        // Immediately invoked async function to handle the promise
-        if (position) {
-            (async () => {
-                try {
-                    const uniqueLocations = await fetchUniqueCities(position);
-                    setCities(uniqueLocations);
-                } catch (error) {
-                    console.error("Failed to fetch unique locations:", error);
-                }
-            })();
-        }
-    }, [position]);
-
 
     const toggleCitySelection = (city) => {
         setSelectedCities(prevSelectedCities => {
@@ -382,17 +350,24 @@ function Map({ googleApiKey }) {
         });
     };
 
+
     const getData = async () => {
         const headers = {
             'X-Master-Key': process.env.REACT_APP_JSON_MASTER_KEY,
             'Content-Type': 'application/json'
         };
-
-        const response = await fetch(process.env.REACT_APP_JSON_URL, { headers });
-
-        const data = await response.json();
-        setPosition(data.record);
+    
+        const promiseOne = fetch(process.env.REACT_APP_JSON_URL, { headers });
+        const promiseTwo = fetch(process.env.REACT_APP_JSON_COORDS, { headers });
+    
+        const [responseOne, responseTwo] = await Promise.all([promiseOne, promiseTwo]);
+        const dataOne = await responseOne.json();
+        const dataTwo = await responseTwo.json();
+    
+        setPosition(dataOne.record);
+        setCities(dataTwo.record)
     };
+    
 
     useEffect(() => {
         getData();
@@ -435,28 +410,12 @@ function Map({ googleApiKey }) {
         window.open(path, '_blank');
     };
 
-    const filteredPositions = position ? position.filter(pos => {
-        const isCitySelected = selectedCities.length === 0 || selectedCities.includes(pos.location.city);
-        return isCitySelected;
-    }) : [];
-
-    const getCityCoordinates = async ({ city, state }) => {
-        const address = encodeURIComponent(`${city}, ${state}`);
-        const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${googleApiKey}`);
-
-        if (!response.ok) {
-            throw new Error('Failed to geocode address');
-        }
-
-        const data = await response.json();
-        if (data.results && data.results.length > 0) {
-            const location = data.results[0].geometry.location;
-            return location;
-        }
-
-        throw new Error('No results found for the specified address');
-    };
-
+    const filteredPositions = useMemo(() => {
+        return position ? position.filter(pos => {
+            return selectedCities.length === 0 || selectedCities.includes(pos.location.city);
+        }) : [];
+    }, [position, selectedCities]);
+    
     const handleCenterLocation = () => {
         setZoom(17);
         setCenter(currentLocation);
@@ -517,12 +476,18 @@ function Map({ googleApiKey }) {
                     >
                         <div className='filters-container'>
                             <div className='city-tags-container'>
-                                {cities.map((city, index) => (
-                                    <span key={index} onClick={() => toggleCitySelection(city)}
-                                        className={`city-tag ${selectedCities.includes(city.city) ? 'selected' : ''}`}>
-                                        {city.city}
-                                    </span>
-                                ))}
+                                {
+                                    cities.length > 0 ? (
+                                        cities.map((city, index) => (
+                                            <span key={index} onClick={() => toggleCitySelection(city)}
+                                                className={`city-tag ${selectedCities.includes(city.city) ? 'selected' : ''}`}>
+                                                {city.city}
+                                            </span>
+                                        ))
+                                    ) : (
+                                        <span>No cities found</span>
+                                    )
+                                }
                             </div>
                             <div className='nav-icon-container'>
                                 <button className='center-location-button' onClick={() => setShowForm(!showForm)}><IoMdAddCircleOutline className='nav-icon-svg' /></button>
@@ -573,6 +538,9 @@ function Map({ googleApiKey }) {
                             isOpen={showForm}
                             handleCloseModal={setShowForm}
                             handleUpatePositions={handleUpatePositions}
+                            coordinateData={cities}
+                            googleApiKey={googleApiKey}
+                            setCities={setCities}
                         />
                     )
                 }

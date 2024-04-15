@@ -5,7 +5,7 @@ function App() {
   let googleApiKey = String(localStorage.getItem("googleApiKey"))
 
 
-  if (googleApiKey == "null" || googleApiKey == "") {
+  while (googleApiKey == "null" || googleApiKey == "") {
     const googleApiKeyNew = prompt("What is the api key?")
     localStorage.setItem("googleApiKey", googleApiKeyNew)
     googleApiKey = localStorage.getItem("googleApiKey")

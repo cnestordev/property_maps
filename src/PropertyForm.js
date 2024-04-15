@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import AddressAutocomplete from './AddressAutocomplete';
 import { ThreeDots } from 'react-loader-spinner';
 
-function PropertyForm({ propertyData, handleCloseModal, isOpen, handleUpatePositions }) {
+function PropertyForm({ propertyData, handleCloseModal, isOpen, handleUpatePositions, coordinateData, googleApiKey, setCities }) {
     console.log(propertyData);
     const [formData, setFormData] = useState({
         listingUrl: '',
@@ -23,6 +23,23 @@ function PropertyForm({ propertyData, handleCloseModal, isOpen, handleUpatePosit
     });
     const [isLoading, setIsLoading] = useState(false);
     const [currentNote, setCurrentNote] = useState('');
+
+    const getCityCoordinates = async ({ city, state }) => {
+        const address = encodeURIComponent(`${city}, ${state}`);
+        const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${googleApiKey}`);
+
+        if (!response.ok) {
+            throw new Error('Failed to geocode address');
+        }
+
+        const data = await response.json();
+        if (data.results && data.results.length > 0) {
+            const location = data.results[0].geometry.location;
+            return location;
+        }
+
+        throw new Error('No results found for the specified address');
+    };
 
 
     const handleChange = (event) => {
@@ -73,12 +90,40 @@ function PropertyForm({ propertyData, handleCloseModal, isOpen, handleUpatePosit
             if (response.ok) {
                 console.log('Listing submitted successfully to jsonblob');
 
-                const data = await response.json();
+                const data = await response.json()
+
+                const city = formData.location.city;
+                const state = formData.location.state;
+
+                const cityExists = coordinateData.some(entry => entry.city.toLowerCase() === city.toLowerCase());
+                if (!cityExists) {
+                    const coords = await getCityCoordinates({ city, state });
+                    const newData = { city, state, coords };
+                    const newCoordinateData = [...coordinateData, newData];
+
+                    // Update the JSON blob with the new data
+                    const headers = {
+                        'Content-Type': 'application/json',
+                        'X-Master-Key': process.env.REACT_APP_JSON_MASTER_KEY,
+                    };
+                    const coordResponse = await fetch(process.env.REACT_APP_JSON_COORDS, {
+                        method: 'PUT',
+                        headers: headers,
+                        body: JSON.stringify(newCoordinateData)
+                    });
+                    const coordData = await coordResponse.json();
+                    setCities(coordData.record);
+
+                } else {
+                    console.log("City already exists:", city);
+                }
+
                 handleUpatePositions(data.record);
 
             } else {
                 console.error('Failed to submit listing to jsonblob');
             }
+
         } catch (error) {
             console.error('Error submitting form to jsonblob:', error);
         }
@@ -87,7 +132,7 @@ function PropertyForm({ propertyData, handleCloseModal, isOpen, handleUpatePosit
         handleClickOverlay();
     };
 
-    const onPlaceSelected = (place) => {
+    const onPlaceSelected = async (place) => {
         console.log(place);
         let city = '';
         let state = '';
