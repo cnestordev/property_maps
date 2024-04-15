@@ -4,12 +4,12 @@ import React, { useEffect, useState } from 'react';
 
 import PropertyForm from './PropertyForm';
 import { PropertyList } from './PropertyList';
-import Add from "./images/add.png";
-import Contrast from "./images/contrast.png";
-import Crosshair from "./images/crosshair.png";
+import { IoMdAddCircleOutline } from "react-icons/io";
+import { CgDarkMode } from "react-icons/cg";
+import { TbGps } from "react-icons/tb";
 import GMaps from "./images/google_maps.png";
 import GPS from "./images/gsp.png";
-import BlueMarker from "./images/marker_green.png";
+import BlueMarker from "./images/marker_blue.png";
 import RedMarker from "./images/marker_red.png";
 
 const containerStyle = {
@@ -22,70 +22,37 @@ const containerStyle = {
 const darkModeStyle = [
     {
         "featureType": "all",
-        "elementType": "all",
+        "elementType": "labels.text.fill",
         "stylers": [
             {
-                "invert_lightness": true
+                "saturation": 36
             },
             {
-                "saturation": "-9"
+                "color": "#000000"
             },
             {
-                "lightness": "0"
-            },
-            {
-                "visibility": "simplified"
+                "lightness": 40
             }
         ]
     },
     {
-        "featureType": "landscape.man_made",
-        "elementType": "all",
-        "stylers": [
-            {
-                "weight": "1.00"
-            }
-        ]
-    },
-    {
-        "featureType": "road.highway",
-        "elementType": "all",
-        "stylers": [
-            {
-                "weight": "0.49"
-            }
-        ]
-    },
-    {
-        "featureType": "road.highway",
-        "elementType": "labels",
-        "stylers": [
-            {
-                "visibility": "on"
-            },
-            {
-                "weight": "0.01"
-            },
-            {
-                "lightness": "-7"
-            },
-            {
-                "saturation": "-35"
-            }
-        ]
-    },
-    {
-        "featureType": "road.highway",
-        "elementType": "labels.text",
-        "stylers": [
-            {
-                "visibility": "on"
-            }
-        ]
-    },
-    {
-        "featureType": "road.highway",
+        "featureType": "all",
         "elementType": "labels.text.stroke",
+        "stylers": [
+            {
+                "visibility": "on"
+            },
+            {
+                "color": "#000000"
+            },
+            {
+                "lightness": 16
+            }
+        ]
+    },
+    {
+        "featureType": "all",
+        "elementType": "labels.icon",
         "stylers": [
             {
                 "visibility": "off"
@@ -93,15 +60,160 @@ const darkModeStyle = [
         ]
     },
     {
-        "featureType": "road.highway",
-        "elementType": "labels.icon",
+        "featureType": "administrative",
+        "elementType": "geometry.fill",
         "stylers": [
             {
-                "visibility": "on"
+                "color": "#000000"
+            },
+            {
+                "lightness": 20
+            }
+        ]
+    },
+    {
+        "featureType": "administrative",
+        "elementType": "geometry.stroke",
+        "stylers": [
+            {
+                "color": "#000000"
+            },
+            {
+                "lightness": 17
+            },
+            {
+                "weight": 1.2
+            }
+        ]
+    },
+    {
+        "featureType": "landscape",
+        "elementType": "geometry",
+        "stylers": [
+            {
+                "color": "#000000"
+            },
+            {
+                "lightness": 20
+            }
+        ]
+    },
+    {
+        "featureType": "landscape",
+        "elementType": "geometry.fill",
+        "stylers": [
+            {
+                "color": "#203c44"
+            }
+        ]
+    },
+    {
+        "featureType": "poi",
+        "elementType": "geometry",
+        "stylers": [
+            {
+                "color": "#000000"
+            },
+            {
+                "lightness": 21
+            }
+        ]
+    },
+    {
+        "featureType": "poi",
+        "elementType": "geometry.fill",
+        "stylers": [
+            {
+                "color": "#2b4b4e"
+            }
+        ]
+    },
+    {
+        "featureType": "road.highway",
+        "elementType": "geometry.fill",
+        "stylers": [
+            {
+                "color": "#000000"
+            },
+            {
+                "lightness": 17
+            }
+        ]
+    },
+    {
+        "featureType": "road.highway",
+        "elementType": "geometry.stroke",
+        "stylers": [
+            {
+                "color": "#000000"
+            },
+            {
+                "lightness": 29
+            },
+            {
+                "weight": 0.2
+            }
+        ]
+    },
+    {
+        "featureType": "road.arterial",
+        "elementType": "geometry",
+        "stylers": [
+            {
+                "color": "#000000"
+            },
+            {
+                "lightness": 18
+            }
+        ]
+    },
+    {
+        "featureType": "road.local",
+        "elementType": "geometry",
+        "stylers": [
+            {
+                "color": "#000000"
+            },
+            {
+                "lightness": 16
+            }
+        ]
+    },
+    {
+        "featureType": "transit",
+        "elementType": "geometry",
+        "stylers": [
+            {
+                "color": "#000000"
+            },
+            {
+                "lightness": 19
+            }
+        ]
+    },
+    {
+        "featureType": "water",
+        "elementType": "geometry",
+        "stylers": [
+            {
+                "color": "#1b1f2f"
+            },
+            {
+                "lightness": 17
+            }
+        ]
+    },
+    {
+        "featureType": "water",
+        "elementType": "geometry.fill",
+        "stylers": [
+            {
+                "color": "#2a5e64"
             }
         ]
     }
 ];
+
 
 const lightModeStyle = [
     {
@@ -225,6 +337,39 @@ function Map({ googleApiKey }) {
     const [emblaRef] = useEmblaCarousel();
     const [isDarkMode, setIsDarkMode] = useState(false);
 
+    useEffect(() => {
+        const fetchUniqueCities = async (locations) => {
+            const result = [];
+            const seenCities = new Set();
+
+            for (const { location: { city, state } } of locations) {
+                if (!seenCities.has(city)) {
+                    try {
+                        let coords = await getCityCoordinates({ city, state });
+                        seenCities.add(city);
+                        result.push({ city, state, coords });
+                    } catch (error) {
+                        console.error("Error fetching coordinates for city:", city, error);
+                    }
+                }
+            }
+            return result;
+        };
+
+        // Immediately invoked async function to handle the promise
+        if (position) {
+            (async () => {
+                try {
+                    const uniqueLocations = await fetchUniqueCities(position);
+                    setCities(uniqueLocations);
+                } catch (error) {
+                    console.error("Failed to fetch unique locations:", error);
+                }
+            })();
+        }
+    }, [position]);
+
+
     const toggleCitySelection = (city) => {
         setSelectedCities(prevSelectedCities => {
             if (prevSelectedCities.includes(city.city)) {
@@ -253,30 +398,6 @@ function Map({ googleApiKey }) {
         getData();
         fetchCurrentLocation();
     }, []);
-
-    useEffect(() => {
-        if (position) {
-            const uniqueCities = async (locations) => {
-                const result = [];
-                const seenCities = new Set();
-
-                for (const { location: { city, state } } of locations) {
-                    if (!seenCities.has(city)) {
-                        let coords = await getCityCoordinates({ city, state });
-                        seenCities.add(city);
-                        result.push({ city, state, coords });
-                    }
-                }
-                return result;
-            };
-
-            uniqueCities(position).then(uniqueLocations => {
-                setCities(uniqueLocations);
-            }).catch(error => {
-                console.error("Failed to fetch unique locations:", error);
-            });
-        }
-    }, [position]);
 
     useEffect(() => {
         // repeated code
@@ -381,7 +502,6 @@ function Map({ googleApiKey }) {
         setPosition(newPositions);
     };
 
-
     return (
         <div className='parent-container'>
             <LoadScript libraries={libraries} googleMapsApiKey={googleApiKey}>
@@ -404,12 +524,10 @@ function Map({ googleApiKey }) {
                                     </span>
                                 ))}
                             </div>
-                            <div className='tools-container'>
-                                <button className='center-location-button' onClick={handleCenterLocation}><img className='crosshair' src={Crosshair} /></button>
-                                <button onClick={() => setShowForm(!showForm)} className='add-property-button'><img className='add-property' src={Add} /></button>
-                            </div>
-                            <div onClick={() => setIsDarkMode(!isDarkMode)} className='nav-icon-container'>
-                                <img className='nav-icon' src={Contrast} />
+                            <div className='nav-icon-container'>
+                                <button className='center-location-button' onClick={() => setShowForm(!showForm)}><IoMdAddCircleOutline className='nav-icon-svg' /></button>
+                                <button className='center-location-button' onClick={handleCenterLocation}><TbGps className='nav-icon-svg' /></button>
+                                <CgDarkMode onClick={() => setIsDarkMode(!isDarkMode)} className='nav-icon-svg' />
                             </div>
                         </div>
                         currentLocation && (

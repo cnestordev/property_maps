@@ -1,5 +1,6 @@
 import { useState } from "react";
 import ImageGallery from "./ImageGallery";
+import { BiMessageRoundedAdd } from "react-icons/bi";
 
 export const PropertyList = ({ selectedMarker, handleMaps, handleOpen, emblaRef, GMaps, propertyData, handleUpatePositions }) => {
 
@@ -92,9 +93,9 @@ export const PropertyList = ({ selectedMarker, handleMaps, handleOpen, emblaRef,
                     <button className='view-on-google' onClick={() => handleMaps(clonedSelectedMarker.location.address)}>
                         {/* Ensure GMaps image source is correctly defined above this component or imported */}
                         <img className='gmaps-logo' src={GMaps} alt="Google Maps" />
-                        View on Google Maps
+                        View on Maps
                     </button>
-                    <button onClick={() => setShowNotepad(true)}>Add Notes</button>
+                    <button className='add-notes-button' onClick={() => setShowNotepad(true)}><BiMessageRoundedAdd className="nav-icon-svg" />Add Notes</button>
                 </div>
             </div>
             {
@@ -102,8 +103,8 @@ export const PropertyList = ({ selectedMarker, handleMaps, handleOpen, emblaRef,
                     <div className="notepad">
                         <textarea onClick={(e) => e.stopPropagation()} onChange={(e) => setNote(e.target.value)} placeholder="Add a note" />
                         <div className="action-buttons">
-                            <button onClick={handleAddNote}>Add Note</button>
                             <button onClick={() => setShowNotepad(false)}>Cancel</button>
+                            <button onClick={handleAddNote}>Add Note</button>
                         </div>
                     </div>
                 )
