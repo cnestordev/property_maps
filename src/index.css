@@ -216,6 +216,10 @@ span.city-tag.selected {
   gap: 10px;
 }
 
+.property-details .embla__container img {
+  border-radius: 20px;
+}
+
 .address-container {
   display: flex;
   flex-direction: column;

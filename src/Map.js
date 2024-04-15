@@ -559,7 +559,7 @@ function Map({ googleApiKey }) {
                                 position={pos.location}
                                 icon={{
                                     url: selectedMarker?.id === pos.id ? RedMarker : BlueMarker,
-                                    scaledSize: { width: 50, height: 50 },
+                                    scaledSize: { width: 52, height: 52 },
                                 }}
                             />
                         ))}
