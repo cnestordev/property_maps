@@ -415,7 +415,7 @@ function Map({ googleApiKey }) {
             return selectedCities.length === 0 || selectedCities.includes(pos.location.city);
         }) : [];
     }, [position, selectedCities]);
-    
+
     const handleCenterLocation = () => {
         setZoom(17);
         setCenter(currentLocation);
@@ -462,7 +462,7 @@ function Map({ googleApiKey }) {
     };
 
     return (
-        <div className='parent-container'>
+        <div className={`parent-container ${isDarkMode ? 'dark-mode' : ''}`}>
             <LoadScript libraries={libraries} googleMapsApiKey={googleApiKey}>
                 <div className='dashboard-container'>
                     <GoogleMap

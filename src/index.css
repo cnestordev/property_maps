@@ -281,8 +281,6 @@ span.city-tag.selected {
   align-items: center;
 }
 
-
-
 .view-on-google {
   border: none;
   display: flex;
@@ -391,4 +389,43 @@ span.city-tag.selected {
   box-sizing: border-box;
 }
 
+/* dark mode */
 
+.parent-container.dark-mode {
+  .filters-container {
+    background-color: #062102;
+  }
+}
+
+
+.parent-container.dark-mode .city-tag {
+  border: 3px solid #1d9f0a;
+  color: #1d9f0a;
+}
+
+.parent-container.dark-mode .city-tag.selected {
+  background-color: #0e4b05;
+  color: #21ff00;
+}
+
+.parent-container.dark-mode .home-widget {
+  background-color: #081e05;
+}
+
+.parent-container.dark-mode .address-container > * {
+  color: #7aa773;
+}
+
+.parent-container.dark-mode .notes-container {
+  background-color: #2c3b2a;
+  color: #7fa979;
+}
+
+.parent-container.dark-mode .action-buttons button {
+  background-color: #215b1982;
+  color: #7fa979;
+}
+
+.parent-container.dark-mode .notes-container .notes-item {
+  color: #8daf89;
+}
