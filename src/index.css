@@ -14,15 +14,17 @@ body {
 }
 
 .dashboard-container {
+  box-sizing: border-box;
   height: 100%;
   width: 98vw;
   display: flex;
   gap: 10px;
   align-items: stretch;
+  padding: 10px 0 0 0;
 }
 
 .home-widget {
-  background-color: #fff;
+  background-color: #f6fff7;
   border-radius: 10px;
   position: absolute;
   width: 0%;
@@ -39,7 +41,7 @@ body {
 }
 
 .filters-container {
-  background-color: #fff;
+  background-color: #f6fff7;
   border-top-right-radius: 10px;
   border-top-left-radius: 10px;
   display: flex;
@@ -126,17 +128,19 @@ body {
 }
 
 span.city-tag {
-  border: 3px solid #dbf8e5;
-  color: #039032;
+  border: 3px solid #063100;
+  color: #063100;
   padding: 14px 20px;
   border-radius: 12px;
   cursor: pointer;
   transition: all 0.2s ease-in;
+  transition: all 300ms ease-in;
 }
 
 span.city-tag.selected {
-  background-color: #dbf8e5;
-  transition: all 0.2s ease-in;
+  background-color: #063100;
+  color: #19ff00;
+  transition: all 300ms ease-in;
 }
 
 .center-location-button {
@@ -191,6 +195,7 @@ span.city-tag.selected {
 .nav-icon-svg {
   width: 35px;
   height: 35px;
+  color: #063100;
 }
 
 .tools-container .add-property-button .add-property {
@@ -215,7 +220,7 @@ span.city-tag.selected {
 
 .address {
   font-size: 1.6rem;
-  color: #363636;
+  color: #39674c;
   font-weight: 700;
   margin: 0;
 }
@@ -228,7 +233,7 @@ span.city-tag.selected {
 
 .city-state-zip {
   font-size: 1.3rem;
-  color: #363636;
+  color: #39674c;
   font-weight: 500;
   margin: 5px 0;
 }
@@ -240,7 +245,7 @@ span.city-tag.selected {
 }
 
 .price-subheader {
-  color: #363636;
+  color: #39674c;
   font-weight: 600;
   font-size: 1.2rem;
   margin-top: 0;
@@ -268,7 +273,7 @@ span.city-tag.selected {
 } */
 
 .action-buttons button {
-  background-color: #e8fcee;
+  background-color: #d5f1d8;
   border-radius: 50px;
   padding: 10px;
   border: none;
@@ -344,7 +349,7 @@ span.city-tag.selected {
   border-radius: 7px;
   display: flex;
   flex-direction: column;
-  background-color: #e6e6e6;
+  background-color: #d7ebd9;
   align-items: flex-start;
 }
 
