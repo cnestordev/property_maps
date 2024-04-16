@@ -61,8 +61,6 @@ const darkModeStyle = [
     }
 ];
 
-
-
 const lightModeStyle = [
     {
         "featureType": "all",
@@ -363,8 +361,6 @@ const lightModeStyle = [
     }
 ];
 
-
-
 const centerLatLng = {
     lat: 33.20384585565068,
     lng: -96.72912847616412
@@ -384,6 +380,18 @@ function Map({ googleApiKey }) {
     const [emblaRef] = useEmblaCarousel();
     const [isDarkMode, setIsDarkMode] = useState(false);
 
+    useEffect(() => {
+        const savedSetting = localStorage.getItem('darkmode');
+        if (savedSetting !== null) {
+            setIsDarkMode(JSON.parse(savedSetting));
+        }
+    }, []);
+
+
+    const toggleDarkMode = () => {
+        setIsDarkMode(prevIsDarkMode => !prevIsDarkMode);
+        localStorage.setItem('darkmode', JSON.stringify(!isDarkMode));
+    };
 
     const toggleCitySelection = (city) => {
         setSelectedCities(prevSelectedCities => {
@@ -518,7 +526,9 @@ function Map({ googleApiKey }) {
                         zoom={zoom}
                         onClick={handleUnselectedMarker}
                         options={{
-                            styles: isDarkMode ? darkModeStyle : lightModeStyle
+                            styles: isDarkMode ? darkModeStyle : lightModeStyle,
+                            streetViewControl: false,
+                            fullscreenControl: false
                         }}
                     >
                         <div className='filters-container'>
@@ -539,7 +549,7 @@ function Map({ googleApiKey }) {
                             <div className='nav-icon-container'>
                                 <button className='center-location-button' onClick={() => setShowForm(!showForm)}><IoMdAddCircleOutline className='nav-icon-svg' /></button>
                                 <button className='center-location-button' onClick={handleCenterLocation}><TbGps className='nav-icon-svg' /></button>
-                                <CgDarkMode onClick={() => setIsDarkMode(!isDarkMode)} className='nav-icon-svg' />
+                                <CgDarkMode onClick={toggleDarkMode} className='nav-icon-svg' />
                             </div>
                         </div>
                         currentLocation && (
