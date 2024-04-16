@@ -1,6 +1,10 @@
 import { useState } from "react";
 import ImageGallery from "./ImageGallery";
 import { BiMessageRoundedAdd } from "react-icons/bi";
+import Bed from "./images/bed.png";
+import Bath from "./images/bath.png";
+import Like from "./images/like.png";
+import Heart from "./images/heart.png";
 
 export const PropertyList = ({ selectedMarker, handleMaps, handleOpen, emblaRef, GMaps, propertyData, handleUpatePositions }) => {
 
@@ -49,7 +53,7 @@ export const PropertyList = ({ selectedMarker, handleMaps, handleOpen, emblaRef,
                         const data = await response.json();
                         clonedSelectedMarker.notes.push({
                             note
-                        })
+                        });
                         handleUpatePositions(data.record);
                     } else {
                         console.error('Failed to submit listing to jsonblob');
@@ -65,14 +69,67 @@ export const PropertyList = ({ selectedMarker, handleMaps, handleOpen, emblaRef,
         }
     };
 
+    const handleToggleFavorite = async () => {
+        const jsonBlobUrl = process.env.REACT_APP_JSON_URL;
+    
+        try {
+            const index = propertyData.findIndex(property => property.id === clonedSelectedMarker.id);
+    
+            if (index !== -1) {
+
+                let dataToSubmit = [...propertyData];
+    
+                // Invert the isFavorited property of the selected marker directly
+                dataToSubmit[index] = {
+                    ...dataToSubmit[index],
+                    isFavorited: !dataToSubmit[index].isFavorited
+                };
+    
+                const response = await fetch(jsonBlobUrl, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-Master-Key': process.env.REACT_APP_JSON_MASTER_KEY
+                    },
+                    body: JSON.stringify(dataToSubmit)
+                });
+    
+                if (response.ok) {
+                    console.log('Favorite status updated successfully to jsonblob');
+    
+                    // Reflect the change locally
+                    clonedSelectedMarker.isFavorited = !clonedSelectedMarker.isFavorited;
+                    handleUpatePositions(dataToSubmit);
+                } else {
+                    console.error('Failed to update favorite status to jsonblob');
+                }
+            } else {
+                console.log(`An entry with id ${clonedSelectedMarker.id} does not exist.`);
+            }
+        } catch (error) {
+            console.error('Error while toggling favorite status:', error);
+        }
+    };
+    
+
 
     return (
         <>
             <div className='property-details'>
+                <div className="like-container">
+                    <button onClick={handleToggleFavorite} className="like-button">
+                        <img className="like-image" src={clonedSelectedMarker.isFavorited ? Heart : Like} alt="like" />
+                    </button>
+                </div>
                 <div className="address-container">
                     <p className='address'>{clonedSelectedMarker.name}</p>
                     <p className='city-state-zip'>{clonedSelectedMarker.location.city}, {clonedSelectedMarker.location.state} {clonedSelectedMarker.location.zip}</p>
                     <p className='price-subheader'>${parseInt(clonedSelectedMarker.price, 10).toLocaleString()}</p>
+                    <div className="property-size-container">
+                        <span className="property-size"><img className="property-image" src={Bed} alt="Bed" /> {clonedSelectedMarker.beds}</span>
+                        <span className="property-size"><img className="property-image" src={Bath} alt="Bath" /> {clonedSelectedMarker.baths}</span>
+                    </div>
                 </div>
                 <div onClick={() => handleOpen(clonedSelectedMarker.listingUrl)} style={{ cursor: 'pointer' }}>
                     <div className="embla" ref={emblaRef}>

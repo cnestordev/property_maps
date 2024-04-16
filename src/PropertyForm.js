@@ -19,7 +19,8 @@ function PropertyForm({ propertyData, handleCloseModal, isOpen, handleUpatePosit
         },
         id: '',
         name: '',
-        notes: []
+        notes: [],
+        isFavorited: false
     });
     const [isLoading, setIsLoading] = useState(false);
     const [currentNote, setCurrentNote] = useState('');
