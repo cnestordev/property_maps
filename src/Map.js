@@ -11,6 +11,7 @@ import GMaps from "./images/google_maps.png";
 import GPS from "./images/gsp.png";
 import BlueMarker from "./images/marker_green.png";
 import RedMarker from "./images/marker_pink.png";
+import Heart from "./images/heart_alt1.png";
 
 const containerStyle = {
     width: '100%',
@@ -380,13 +381,6 @@ function Map({ googleApiKey }) {
     const [emblaRef] = useEmblaCarousel();
     const [isDarkMode, setIsDarkMode] = useState(false);
 
-    useEffect(() => {
-        const savedSetting = localStorage.getItem('darkmode');
-        if (savedSetting !== null) {
-            setIsDarkMode(JSON.parse(savedSetting));
-        }
-    }, []);
-
 
     const toggleDarkMode = () => {
         setIsDarkMode(prevIsDarkMode => !prevIsDarkMode);
@@ -425,6 +419,10 @@ function Map({ googleApiKey }) {
 
 
     useEffect(() => {
+        const savedSetting = localStorage.getItem('darkmode');
+        if (savedSetting !== null) {
+            setIsDarkMode(JSON.parse(savedSetting));
+        }
         getData();
         fetchCurrentLocation();
     }, []);
@@ -444,6 +442,13 @@ function Map({ googleApiKey }) {
             setZoom(10);
         }
     }, [selectedCities]);
+
+    useEffect(() => {
+        const updatedMarker = position.find(marker => marker.id === selectedMarker?.id)
+        if (updatedMarker) {
+            setSelectedMarker(updatedMarker);
+        }
+    }, [position]);
 
     const fetchCurrentLocation = () => {
         if (navigator.geolocation) {
@@ -568,8 +573,8 @@ function Map({ googleApiKey }) {
                                 key={index}
                                 position={pos.location}
                                 icon={{
-                                    url: selectedMarker?.id === pos.id ? RedMarker : BlueMarker,
-                                    scaledSize: { width: 52, height: 52 },
+                                    url: pos.isFavorited ? Heart : selectedMarker?.id === pos.id ? RedMarker : BlueMarker,
+                                    scaledSize: pos.isFavorited ? {width: 45, height: 45} : { width: 50, height: 50 },
                                 }}
                             />
                         ))}

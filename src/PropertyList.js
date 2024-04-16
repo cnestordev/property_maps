@@ -7,7 +7,7 @@ import Like from "./images/like.png";
 import Heart from "./images/heart.png";
 
 export const PropertyList = ({ selectedMarker, handleMaps, handleOpen, emblaRef, GMaps, propertyData, handleUpatePositions }) => {
-
+    
     const [showNotepad, setShowNotepad] = useState(false);
     const [note, setNote] = useState('');
 
@@ -71,20 +71,20 @@ export const PropertyList = ({ selectedMarker, handleMaps, handleOpen, emblaRef,
 
     const handleToggleFavorite = async () => {
         const jsonBlobUrl = process.env.REACT_APP_JSON_URL;
-    
+
         try {
             const index = propertyData.findIndex(property => property.id === clonedSelectedMarker.id);
-    
+
             if (index !== -1) {
 
                 let dataToSubmit = [...propertyData];
-    
+
                 // Invert the isFavorited property of the selected marker directly
                 dataToSubmit[index] = {
                     ...dataToSubmit[index],
                     isFavorited: !dataToSubmit[index].isFavorited
                 };
-    
+
                 const response = await fetch(jsonBlobUrl, {
                     method: 'PUT',
                     headers: {
@@ -94,13 +94,12 @@ export const PropertyList = ({ selectedMarker, handleMaps, handleOpen, emblaRef,
                     },
                     body: JSON.stringify(dataToSubmit)
                 });
-    
+
                 if (response.ok) {
                     console.log('Favorite status updated successfully to jsonblob');
-    
-                    // Reflect the change locally
-                    clonedSelectedMarker.isFavorited = !clonedSelectedMarker.isFavorited;
-                    handleUpatePositions(dataToSubmit);
+
+                    const data = await response.json();
+                    handleUpatePositions(data.record);
                 } else {
                     console.error('Failed to update favorite status to jsonblob');
                 }
@@ -111,17 +110,12 @@ export const PropertyList = ({ selectedMarker, handleMaps, handleOpen, emblaRef,
             console.error('Error while toggling favorite status:', error);
         }
     };
-    
+
 
 
     return (
         <>
             <div className='property-details'>
-                <div className="like-container">
-                    <button onClick={handleToggleFavorite} className="like-button">
-                        <img className="like-image" src={clonedSelectedMarker.isFavorited ? Heart : Like} alt="like" />
-                    </button>
-                </div>
                 <div className="address-container">
                     <p className='address'>{clonedSelectedMarker.name}</p>
                     <p className='city-state-zip'>{clonedSelectedMarker.location.city}, {clonedSelectedMarker.location.state} {clonedSelectedMarker.location.zip}</p>
@@ -153,6 +147,9 @@ export const PropertyList = ({ selectedMarker, handleMaps, handleOpen, emblaRef,
                         View on Maps
                     </button>
                     <button className='add-notes-button' onClick={() => setShowNotepad(true)}><BiMessageRoundedAdd className="nav-icon-svg" />Add Notes</button>
+                    <button onClick={handleToggleFavorite} className="like-button">
+                        <img className="like-image" src={clonedSelectedMarker.isFavorited ? Heart : Like} alt="like" /> Favorite
+                    </button>
                 </div>
             </div>
             {

@@ -220,27 +220,6 @@ span.city-tag.selected {
   border-radius: 20px;
 }
 
-.like-container {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  z-index: 2;
-}
-
-.like-button {
-  width: 50px;
-  height: 50px;
-  background: transparent;
-  border: none;
-  filter: invert(100%);
-  opacity: 0.7;
-  cursor: pointer;
-}
-
-.like-image {
-  width: 100%;
-}
-
 .address-container {
   display: flex;
   flex-direction: column;
@@ -328,6 +307,17 @@ span.city-tag.selected {
   display: flex;
   align-items: center;
   cursor: pointer;
+  flex: 0 0 25%;
+}
+
+.like-button {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.like-image {
+  width: 28%;
 }
 
 .view-on-google {
