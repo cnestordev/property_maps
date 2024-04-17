@@ -20,7 +20,8 @@ function PropertyForm({ propertyData, handleCloseModal, isOpen, handleUpatePosit
         id: '',
         name: '',
         notes: [],
-        isFavorited: false
+        isFavorited: false,
+        historicalPrices: []
     });
     const [isLoading, setIsLoading] = useState(false);
     const [currentNote, setCurrentNote] = useState('');
@@ -73,6 +74,10 @@ function PropertyForm({ propertyData, handleCloseModal, isOpen, handleUpatePosit
                         id: Date.now()
                     });
                 }
+                formData.historicalPrices.push({
+                    price: formData.price,
+                    date: new Date().toLocaleDateString('en-US', { month: '1-digit', day: '2-digit' })
+                });
                 dataToSubmit = [...propertyData, formData];
             } else {
                 return console.log(`An entry with id ${formData.id} already exists.`);

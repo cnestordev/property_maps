@@ -390,6 +390,10 @@ span.city-tag.selected {
   align-items: flex-start;
 }
 
+.chart-container {
+  margin: 5px auto;
+}
+
 .notes-header {
   color: #565f6b;
   font-weight: 500;

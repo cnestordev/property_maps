@@ -493,8 +493,6 @@ function Map({ googleApiKey }) {
         setSelectedMarker(null);
         // repeated code
         if (selectedCities.length === 1) {
-            console.log(selectedCities);
-            console.log(cities);
             const foundCity = cities.find(city => city.city === selectedCities[0]);
             if (foundCity) {
                 setCenter(foundCity.coords);

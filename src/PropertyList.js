@@ -1,13 +1,17 @@
 import { useState } from "react";
-import ImageGallery from "./ImageGallery";
+
 import { BiMessageRoundedAdd } from "react-icons/bi";
-import Bed from "./images/bed.png";
+import { Chart } from "./Chart";
+import ImageGallery from "./ImageGallery";
 import Bath from "./images/bath.png";
-import Like from "./images/like.png";
+import Bed from "./images/bed.png";
 import Heart from "./images/heart.png";
+import Like from "./images/like.png";
+
+
 
 export const PropertyList = ({ selectedMarker, handleMaps, handleOpen, emblaRef, GMaps, propertyData, handleUpatePositions }) => {
-    
+
     const [showNotepad, setShowNotepad] = useState(false);
     const [note, setNote] = useState('');
 
@@ -139,6 +143,9 @@ export const PropertyList = ({ selectedMarker, handleMaps, handleOpen, emblaRef,
                             clonedSelectedMarker.notes.map((note, i) => <li className='notes-item' key={i}>{note.note}</li>)
                         )
                     }
+                </div>
+                <div>
+                    <Chart data={clonedSelectedMarker.historicalData} />
                 </div>
                 <div className='action-buttons notes-context'>
                     <button className='view-on-google' onClick={() => handleMaps(clonedSelectedMarker.location.address)}>
