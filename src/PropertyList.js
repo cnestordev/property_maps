@@ -195,7 +195,7 @@ export const PropertyList = ({ selectedMarker, handleMaps, handleOpen, emblaRef,
                     }
                 </div>
                 <div>
-                    <Chart data={clonedSelectedMarker.historicalData} />
+                    <Chart data={clonedSelectedMarker.historicalPrices} />
                 </div>
                 <div className='action-buttons notes-context'>
                     <button className='view-on-google' onClick={() => handleMaps(clonedSelectedMarker.location.address)}>
