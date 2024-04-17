@@ -310,13 +310,12 @@ span.city-tag.selected {
   flex: 0 0 25%;
 }
 
-@media  (max-width: 1162px) {
+@media (max-width: 1162px) {
   .action-buttons button {
     padding: 7px;
     font-size: 10px;
     flex: 0 0 31%;
   }
-  
 }
 
 .like-button {
@@ -416,7 +415,7 @@ span.city-tag.selected {
   margin: 5px 0;
 }
 
-.notepad {
+.notepad-overlay {
   background: #8a9db0a6;
   position: absolute;
   top: 0;
@@ -431,15 +430,63 @@ span.city-tag.selected {
   z-index: 2;
 }
 
+.pricepad {
+  border-radius: 5px;
+  background-color: #1f1f22;
+  padding: 25px;
+  width: 47%;
+  display: flex;
+  justify-content: center;
+}
+
+.pricepad input {
+  border: 1px solid #cccccc;
+  border-radius: 10px;
+  padding: 12px;
+  font-size: 15px;
+  outline: none;
+}
+
+.price-update-container {
+  display: flex;
+  gap: 20px;
+}
+
+.notepad {
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 50%;
+  height: 30%;
+  background-color: #efefef;
+}
+
 .notepad textarea {
-  width: 60%;
+  width: 100%;
   height: 60%;
   resize: none;
   outline: none;
-  background-color: #efefef;
   border-radius: 10px;
   padding: 30px;
   box-sizing: border-box;
+}
+
+.notepad .action-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.notepad button {
+  border: none;
+  background-color: #dbf8e5;
+  padding: 12px;
+  border-radius: 15px;
+  cursor: pointer;
+  flex-basis: 70%;
+  padding: 15px;
 }
 
 /* dark mode */
@@ -490,8 +537,32 @@ span.city-tag.selected {
   color: #e4e6eb;
 }
 
+.parent-container.dark-mode .pricepad {
+  background-color: #232c3e;
+}
+
+.parent-container.dark-mode .pricepad input {
+  background-color: #232c3e;
+  border-radius: 0;
+  border: none;
+  border-bottom: 1px solid #4e6994;
+}
+
+.parent-container.dark-mode .pricepad button {
+  border: none;
+  background-color: #718097;
+  color: #fff;
+  padding: 15px;
+  border-radius: 50px;
+}
+
+.parent-container.dark-mode .notepad {
+  background-color: #232c3e;
+}
+
 .parent-container.dark-mode .notepad textarea {
-  background-color: #252e39;
-  color: #bdc0c6;
+  background-color: transparent;
+  border: 1px solid transparent;
+  color: #c6d9ff;
   font-size: 18px;
 }

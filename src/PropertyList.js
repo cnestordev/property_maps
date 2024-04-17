@@ -14,6 +14,7 @@ export const PropertyList = ({ selectedMarker, handleMaps, handleOpen, emblaRef,
 
     const [showNotepad, setShowNotepad] = useState(false);
     const [note, setNote] = useState('');
+    const [price, setPrice] = useState(0);
 
     const clonedSelectedMarker = selectedMarker ? { ...selectedMarker } : null;
 
@@ -115,7 +116,56 @@ export const PropertyList = ({ selectedMarker, handleMaps, handleOpen, emblaRef,
         }
     };
 
+    const handleAddPrice = async () => {
+        if (price) {
+            const jsonBlobUrl = process.env.REACT_APP_JSON_URL;
 
+            const currentDate = new Date();
+            const formattedDate = ((currentDate.getMonth() + 1) + '').padStart(2, '0') + '/' + (currentDate.getDate() + '').padStart(2, '0');
+
+            try {
+                const index = propertyData.findIndex(property => property.id === clonedSelectedMarker.id);
+
+                if (index !== -1) {
+                    let dataToSubmit = [...propertyData];
+
+                    dataToSubmit[index] = {
+                        ...dataToSubmit[index],
+                        price,
+                        historicalData: [...dataToSubmit[index].historicalData, {
+                            price,
+                            date: formattedDate
+                        }]
+                    };
+
+                    const response = await fetch(jsonBlobUrl, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json',
+                            'X-Master-Key': process.env.REACT_APP_JSON_MASTER_KEY
+                        },
+                        body: JSON.stringify(dataToSubmit)
+                    });
+
+                    if (response.ok) {
+                        console.log('Historical data submitted successfully to jsonblob');
+
+                        const data = await response.json();
+                        handleUpatePositions(data.record);
+                    } else {
+                        console.error('Failed to submit historical data to jsonblob');
+                    }
+                } else {
+                    console.log(`An entry with id ${clonedSelectedMarker.id} does not exist.`);
+                }
+            } catch (error) {
+                console.error('Error submitting historical data to jsonblob:', error);
+            }
+        }
+        setShowNotepad(false);
+        setPrice(0);
+    };
 
     return (
         <>
@@ -161,11 +211,19 @@ export const PropertyList = ({ selectedMarker, handleMaps, handleOpen, emblaRef,
             </div>
             {
                 showNotepad && (
-                    <div className="notepad">
-                        <textarea onClick={(e) => e.stopPropagation()} onChange={(e) => setNote(e.target.value)} placeholder="Add a note" />
-                        <div className="action-buttons">
-                            <button onClick={() => setShowNotepad(false)}>Cancel</button>
-                            <button onClick={handleAddNote}>Add Note</button>
+                    <div className="notepad-overlay">
+                        <div className="pricepad">
+                            <div className="price-update-container">
+                                <input placeholder="$" onChange={(e) => setPrice(e.target.value)} type="number" />
+                                <button onClick={handleAddPrice}>Update</button>
+                            </div>
+                        </div>
+                        <div className="notepad">
+                            <textarea onClick={(e) => e.stopPropagation()} onChange={(e) => setNote(e.target.value)} placeholder="Add a note" />
+                            <div className="action-buttons">
+                                <button onClick={() => setShowNotepad(false)}>Cancel</button>
+                                <button onClick={handleAddNote}>Add Note</button>
+                            </div>
                         </div>
                     </div>
                 )
