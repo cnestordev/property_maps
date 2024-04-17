@@ -59,13 +59,17 @@ function PropertyForm({ propertyData, handleCloseModal, isOpen, handleUpatePosit
         event.preventDefault();
 
         setIsLoading(true);
-
+        console.log(formData);
         const jsonBlobUrl = process.env.REACT_APP_JSON_URL;
 
         try {
             const existingEntry = propertyData.find(property => property.id === formData.id);
 
             let dataToSubmit = propertyData;
+
+            let date = new Date();
+            let formattedDate = date.getFullYear() + '-' + (date.getMonth() + 1).toString().padStart(2, '0') + '-' + date.getDate().toString().padStart(2, '0');
+
 
             if (!existingEntry) {
                 if (currentNote) {
@@ -76,13 +80,12 @@ function PropertyForm({ propertyData, handleCloseModal, isOpen, handleUpatePosit
                 }
                 formData.historicalPrices.push({
                     price: formData.price,
-                    date: new Date().toLocaleDateString('en-US', { month: '1-digit', day: '2-digit' })
+                    date: formattedDate
                 });
                 dataToSubmit = [...propertyData, formData];
             } else {
                 return console.log(`An entry with id ${formData.id} already exists.`);
             }
-
             const response = await fetch(jsonBlobUrl, {
                 method: 'PUT',
                 headers: {
@@ -96,7 +99,7 @@ function PropertyForm({ propertyData, handleCloseModal, isOpen, handleUpatePosit
             if (response.ok) {
                 console.log('Listing submitted successfully to jsonblob');
 
-                const data = await response.json()
+                const data = await response.json();
 
                 const city = formData.location.city;
                 const state = formData.location.state;
