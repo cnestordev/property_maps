@@ -591,6 +591,7 @@ function Map({ googleApiKey }) {
                     </GoogleMap>
                     <div className={`list-view-widget ${!showListView ? 'hidden' : ''}`}>
                         <ListView
+                            selectedMarker={selectedMarker}
                             properties={filteredPositions}
                             handleSelectedMarker={handleSelectedMarker}
                         />

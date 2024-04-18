@@ -7,6 +7,7 @@ import Bath from "./images/bath.png";
 import Bed from "./images/bed.png";
 import Heart from "./images/heart.png";
 import Like from "./images/like.png";
+import { LuTrash } from "react-icons/lu";
 
 
 
@@ -167,6 +168,43 @@ export const PropertyList = ({ selectedMarker, handleMaps, handleOpen, emblaRef,
         setPrice(0);
     };
 
+    const handleDeleteProperty = async () => {
+        const jsonBlobUrl = process.env.REACT_APP_JSON_URL;
+
+        try {
+            const index = propertyData.findIndex(property => property.id === clonedSelectedMarker.id);
+
+            if (index !== -1) {
+
+                let dataToSubmit = propertyData.filter(property => property.id !== clonedSelectedMarker.id);
+
+                const response = await fetch(jsonBlobUrl, {
+                    method: 'PUT', // Use PUT to replace the entire collection
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-Master-Key': process.env.REACT_APP_JSON_MASTER_KEY
+                    },
+                    body: JSON.stringify(dataToSubmit)
+                });
+
+                if (response.ok) {
+                    console.log('Property deleted successfully from jsonblob');
+
+                    const data = await response.json();
+                    handleUpatePositions(data.record);
+                } else {
+                    console.error('Failed to delete property from jsonblob');
+                }
+            } else {
+                console.log(`Property with id ${clonedSelectedMarker.id} does not exist.`);
+            }
+        } catch (error) {
+            console.error('Error while deleting property:', error);
+        }
+    };
+
+
     return (
         <>
             <div className='property-details'>
@@ -201,12 +239,12 @@ export const PropertyList = ({ selectedMarker, handleMaps, handleOpen, emblaRef,
                     <button className='view-on-google' onClick={() => handleMaps(clonedSelectedMarker.location.address)}>
                         {/* Ensure GMaps image source is correctly defined above this component or imported */}
                         <img className='gmaps-logo' src={GMaps} alt="Google Maps" />
-                        View on Maps
                     </button>
-                    <button className='add-notes-button' onClick={() => setShowNotepad(true)}><BiMessageRoundedAdd className="nav-icon-svg" />Add Notes</button>
+                    <button className='add-notes-button' onClick={() => setShowNotepad(true)}><BiMessageRoundedAdd className="nav-icon-svg" /></button>
                     <button onClick={handleToggleFavorite} className="like-button">
-                        <img className="like-image" src={clonedSelectedMarker.isFavorited ? Heart : Like} alt="like" /> Favorite
+                        <img className="like-image" src={clonedSelectedMarker.isFavorited ? Heart : Like} alt="like" />
                     </button>
+                    <button onClick={handleDeleteProperty}><LuTrash /></button>
                 </div>
             </div>
             {

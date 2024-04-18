@@ -2,11 +2,11 @@ import './PropertyList.css';
 import Heart from './images/heart.png';
 
 
-const PropertyCard = ({ property, handleSelectedMarker }) => {
+const PropertyCard = ({ property, handleSelectedMarker, selectedMarker }) => {
     const { name, beds, baths, price, imageUrls, isFavorited } = property;
     
     return (
-        <div className="property-card">
+        <div className={`property-card ${selectedMarker?.id === property.id ? 'card-selected' : ''}`}>
             <div className='card-image-container'>
                 <img onClick={() => handleSelectedMarker(property)} src={imageUrls[0]} alt={name} className="property-card-image" />
             </div>
@@ -24,11 +24,11 @@ const PropertyCard = ({ property, handleSelectedMarker }) => {
     );
 };
 
-export const ListView = ({ properties, handleSelectedMarker }) => {
+export const ListView = ({ properties, handleSelectedMarker, selectedMarker }) => {
     return (
         <div className="property-list">
             {properties.map(property => (
-                <PropertyCard key={property.id} property={property } handleSelectedMarker={handleSelectedMarker} />
+                <PropertyCard key={property.id} property={property } handleSelectedMarker={handleSelectedMarker} selectedMarker={selectedMarker} />
             ))}
         </div>
     );
