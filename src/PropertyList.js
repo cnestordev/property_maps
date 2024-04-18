@@ -7,6 +7,7 @@ import Bath from "./images/bath.png";
 import Bed from "./images/bed.png";
 import Heart from "./images/heart.png";
 import Like from "./images/like.png";
+import Calendar from "./images/calendar.png";
 import { LuTrash } from "react-icons/lu";
 
 
@@ -16,6 +17,9 @@ export const PropertyList = ({ selectedMarker, handleMaps, handleOpen, emblaRef,
     const [showNotepad, setShowNotepad] = useState(false);
     const [note, setNote] = useState('');
     const [price, setPrice] = useState(0);
+    const [tourDate, setTourDate] = useState('');
+    const [tourTime, setTourTime] = useState('');
+    const [hasTour, setHasTour] = useState(false);
 
     const clonedSelectedMarker = selectedMarker ? { ...selectedMarker } : null;
 
@@ -218,6 +222,61 @@ export const PropertyList = ({ selectedMarker, handleMaps, handleOpen, emblaRef,
         }
     };
 
+    const handleUpdateTour = async () => {
+        if (tourDate && tourTime) {
+            const jsonBlobUrl = process.env.REACT_APP_JSON_URL;
+
+            try {
+                const index = propertyData.findIndex(property => property.id === clonedSelectedMarker.id);
+
+                if (index !== -1) {
+                    let dataToSubmit = [...propertyData];
+
+                    dataToSubmit[index] = {
+                        ...dataToSubmit[index],
+                        tour: {
+                            date: tourDate,
+                            time: tourTime,
+                            hasTour
+                        }
+                    };
+
+                    const response = await fetch(jsonBlobUrl, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json',
+                            'X-Master-Key': process.env.REACT_APP_JSON_MASTER_KEY
+                        },
+                        body: JSON.stringify(dataToSubmit)
+                    });
+
+                    if (response.ok) {
+                        console.log('Tour data submitted successfully to jsonblob');
+
+                        const data = await response.json();
+                        handleUpatePositions(data.record);
+                        openSnackbar('Tour updated successfully.', 3000);
+                    } else {
+                        openSnackbar('Error updating tour.', 3000);
+                        console.error('Failed to submit tour data to jsonblob');
+                    }
+                } else {
+                    openSnackbar('An entry with id ' + clonedSelectedMarker.id + ' does not exist.', 3000);
+                    console.log(`An entry with id ${clonedSelectedMarker.id} does not exist.`);
+                }
+            } catch (error) {
+                openSnackbar('Error submitting tour.', 3000);
+                console.error('Error submitting tour data to jsonblob:', error);
+            }
+        } else {
+            openSnackbar('Invalid tour date or time.', 3000);
+            console.log('Invalid tour date or time provided.');
+        }
+        setShowNotepad(false);
+    };
+
+
 
     return (
         <>
@@ -229,6 +288,11 @@ export const PropertyList = ({ selectedMarker, handleMaps, handleOpen, emblaRef,
                     <div className="property-size-container">
                         <span className="property-size"><img className="property-image" src={Bed} alt="Bed" /> {clonedSelectedMarker.beds}</span>
                         <span className="property-size"><img className="property-image" src={Bath} alt="Bath" /> {clonedSelectedMarker.baths}</span>
+                        {
+                            selectedMarker.tour.hasTour && (
+                                <span className="property-size"><img className="property-image" src={Calendar} alt="Calendar" /> {clonedSelectedMarker.tour.date + ' ' + clonedSelectedMarker.tour.time}</span>
+                            )
+                        }
                     </div>
                 </div>
                 <div onClick={() => handleOpen(clonedSelectedMarker.listingUrl)} style={{ cursor: 'pointer' }}>
@@ -268,6 +332,17 @@ export const PropertyList = ({ selectedMarker, handleMaps, handleOpen, emblaRef,
                             <div className="price-update-container">
                                 <input placeholder="$" onChange={(e) => setPrice(e.target.value)} type="number" />
                                 <button onClick={handleAddPrice}>Update</button>
+                            </div>
+                        </div>
+                        <div className="tourpad">
+                            <div className="tour-update-container">
+                                <input placeholder="04/27" type="text" onChange={(e) => setTourDate(e.target.value)} />
+                                <input placeholder="3:00PM" type="text" onChange={(e) => setTourTime(e.target.value)} />
+                                <label>
+                                    <input type="checkbox" onChange={(e) => setHasTour(e.target.checked)} />
+                                    <span>Tour</span>
+                                </label>
+                                <button onClick={handleUpdateTour}>Schedule</button>
                             </div>
                         </div>
                         <div className="notepad">

@@ -459,6 +459,28 @@ span.city-tag.selected {
   gap: 20px;
 }
 
+.tourpad {
+  background-color: #232c3e;
+  padding: 5px;
+  width: 50%;
+  box-sizing: border-box;
+}
+
+.tour-update-container{
+  background-color: #232c3e;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.tourpad input {
+  background-color: transparent;
+  border: none;
+  padding: 12px;
+  font-size: 15px;
+  outline: none;
+}
+
 .notepad {
   border-radius: 5px;
   display: flex;
@@ -558,7 +580,10 @@ span.city-tag.selected {
   border-bottom: 1px solid #4e6994;
 }
 
-.parent-container.dark-mode .pricepad button {
+.parent-container.dark-mode .pricepad button, 
+.parent-container.dark-mode .tourpad button,
+.parent-container.dark-mode .notepad button {
+  flex-basis: 100%;
   border: none;
   background-color: #718097;
   color: #fff;

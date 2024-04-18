@@ -83,6 +83,13 @@
   padding: 10px;
 }
 
+.tour-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+
 .parent-container.dark-mode .list-view-widget {
   background-color: #102a43;
   color: #fff;
@@ -94,5 +101,9 @@
 }
 
 .parent-container.dark-mode .property-card.card-selected {
-  background: #829ab1;
+  background: #2e475f;
+}
+
+.parent-container.dark-mode .tour-info img {
+  filter: invert(80%);
 }

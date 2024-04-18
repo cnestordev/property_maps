@@ -385,7 +385,7 @@ const options = {
         top: '10px',
     },
     closeStyle: {
-        color: 'red',
+        color: 'white',
         fontSize: '16px',
     },
 };
@@ -439,6 +439,7 @@ function Map({ googleApiKey }) {
 
             setPosition(dataOne.record);
             setCities(dataTwo.record);
+            openSnackbar('Map data loaded successfully', 5000);
         } catch (error) {
             console.error('Error fetching data:', error);
             openSnackbar('There was an error fetching the data.', 5000);
