@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import AddressAutocomplete from './AddressAutocomplete';
 import { ThreeDots } from 'react-loader-spinner';
 
-function PropertyForm({ propertyData, handleCloseModal, isOpen, handleUpatePositions, coordinateData, googleApiKey, setCities }) {
+function PropertyForm({ propertyData, handleCloseModal, isOpen, handleUpatePositions, coordinateData, googleApiKey, setCities, openSnackbar }) {
     console.log(propertyData);
     const [formData, setFormData] = useState({
         listingUrl: '',
@@ -122,18 +122,21 @@ function PropertyForm({ propertyData, handleCloseModal, isOpen, handleUpatePosit
                     });
                     const coordData = await coordResponse.json();
                     setCities(coordData.record);
-
+                    openSnackbar('Listing submitted successfully', 5000);
                 } else {
+                    openSnackbar('Listing already exists', 5000);
                     console.log("City already exists:", city);
                 }
 
                 handleUpatePositions(data.record);
 
             } else {
+                openSnackbar('Failed to submit listing to jsonblob', 5000);
                 console.error('Failed to submit listing to jsonblob');
             }
 
         } catch (error) {
+            openSnackbar('Error submitting form to jsonblob', 5000);
             console.error('Error submitting form to jsonblob:', error);
         }
 

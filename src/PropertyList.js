@@ -11,7 +11,7 @@ import { LuTrash } from "react-icons/lu";
 
 
 
-export const PropertyList = ({ selectedMarker, handleMaps, handleOpen, emblaRef, GMaps, propertyData, handleUpatePositions }) => {
+export const PropertyList = ({ selectedMarker, handleMaps, handleOpen, emblaRef, GMaps, propertyData, handleUpatePositions, openSnackbar }) => {
 
     const [showNotepad, setShowNotepad] = useState(false);
     const [note, setNote] = useState('');
@@ -60,14 +60,17 @@ export const PropertyList = ({ selectedMarker, handleMaps, handleOpen, emblaRef,
                         clonedSelectedMarker.notes.push({
                             note
                         });
+                        openSnackbar('Note added successfully.', 3000);
                         handleUpatePositions(data.record);
                     } else {
                         console.error('Failed to submit listing to jsonblob');
                     }
                 } else {
+                    openSnackbar('An entry with id ' + clonedSelectedMarker.id + ' does not exist.', 3000);
                     console.log(`An entry with id ${clonedSelectedMarker.id} does not exist.`);
                 }
             } catch (error) {
+                openSnackbar('Error submitting note.', 3000);
                 console.error('Error submitting form to jsonblob:', error);
             }
             setNote('');
@@ -105,14 +108,18 @@ export const PropertyList = ({ selectedMarker, handleMaps, handleOpen, emblaRef,
                     console.log('Favorite status updated successfully to jsonblob');
 
                     const data = await response.json();
+                    openSnackbar('Favorite updated successfully.', 3000);
                     handleUpatePositions(data.record);
                 } else {
+                    openSnackbar('Error updating favorite status.', 3000);
                     console.error('Failed to update favorite status to jsonblob');
                 }
             } else {
+                openSnackbar('An entry with id ' + clonedSelectedMarker.id + ' does not exist.', 3000);
                 console.log(`An entry with id ${clonedSelectedMarker.id} does not exist.`);
             }
         } catch (error) {
+            openSnackbar('Error while toggling favorite status.', 3000);
             console.error('Error while toggling favorite status:', error);
         }
     };
@@ -154,13 +161,17 @@ export const PropertyList = ({ selectedMarker, handleMaps, handleOpen, emblaRef,
 
                         const data = await response.json();
                         handleUpatePositions(data.record);
+                        openSnackbar('Price updated successfully.', 3000);
                     } else {
+                        openSnackbar('Error updating price.', 3000);
                         console.error('Failed to submit historical data to jsonblob');
                     }
                 } else {
+                    openSnackbar('An entry with id ' + clonedSelectedMarker.id + ' does not exist.', 3000);
                     console.log(`An entry with id ${clonedSelectedMarker.id} does not exist.`);
                 }
             } catch (error) {
+                openSnackbar('Error submitting price.', 3000);
                 console.error('Error submitting historical data to jsonblob:', error);
             }
         }
@@ -193,13 +204,16 @@ export const PropertyList = ({ selectedMarker, handleMaps, handleOpen, emblaRef,
 
                     const data = await response.json();
                     handleUpatePositions(data.record);
+                    openSnackbar('Property deleted successfully.', 3000);
                 } else {
                     console.error('Failed to delete property from jsonblob');
                 }
             } else {
+                openSnackbar('Property with id ' + clonedSelectedMarker.id + ' does not exist.', 3000);
                 console.log(`Property with id ${clonedSelectedMarker.id} does not exist.`);
             }
         } catch (error) {
+            openSnackbar('Error while deleting property.', 3000);
             console.error('Error while deleting property:', error);
         }
     };

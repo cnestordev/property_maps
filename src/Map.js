@@ -5,17 +5,17 @@ import { IoMdAddCircleOutline } from "react-icons/io";
 import { CgDarkMode } from "react-icons/cg";
 import { TbGps } from "react-icons/tb";
 import { CiCircleList } from "react-icons/ci";
+import { useSnackbar } from 'react-simple-snackbar';
 
 import PropertyForm from './PropertyForm';
 import { PropertyList } from './PropertyList';
-import { ListView } from './ListView'; 
+import { ListView } from './ListView';
 
 import GMaps from "./images/google_maps.png";
 import GPS from "./images/gsp.png";
 import BlueMarker from "./images/marker_green.png";
 import RedMarker from "./images/marker_pink.png";
 import Heart from "./images/heart_alt1.png";
-import { Image } from './Image';
 
 const containerStyle = {
     width: '100%',
@@ -373,6 +373,23 @@ const centerLatLng = {
 
 const libraries = ["places"];
 
+const options = {
+    position: 'top-right',
+    style: {
+        backgroundColor: '#0d6ea1',
+        border: '2px solid #0d6ea1',
+        color: '#c1eaff',
+        fontFamily: 'inherit',
+        fontSize: '20px',
+        textAlign: 'center',
+        top: '10px',
+    },
+    closeStyle: {
+        color: 'red',
+        fontSize: '16px',
+    },
+};
+
 function Map({ googleApiKey }) {
     const [position, setPosition] = useState([]);
     const [selectedMarker, setSelectedMarker] = useState(null);
@@ -385,6 +402,7 @@ function Map({ googleApiKey }) {
     const [emblaRef] = useEmblaCarousel();
     const [isDarkMode, setIsDarkMode] = useState(false);
     const [showListView, setShowListView] = useState(false);
+    const [openSnackbar, closeSnackbar] = useSnackbar(options);
 
 
     const toggleDarkMode = () => {
@@ -406,20 +424,25 @@ function Map({ googleApiKey }) {
 
 
     const getData = async () => {
-        const headers = {
-            'X-Master-Key': process.env.REACT_APP_JSON_MASTER_KEY,
-            'Content-Type': 'application/json'
-        };
+        try {
+            const headers = {
+                'X-Master-Key': process.env.REACT_APP_JSON_MASTER_KEY,
+                'Content-Type': 'application/json'
+            };
 
-        const promiseOne = fetch(process.env.REACT_APP_JSON_URL, { headers });
-        const promiseTwo = fetch(process.env.REACT_APP_JSON_COORDS, { headers });
+            const promiseOne = fetch(process.env.REACT_APP_JSON_URL, { headers });
+            const promiseTwo = fetch(process.env.REACT_APP_JSON_COORDS, { headers });
 
-        const [responseOne, responseTwo] = await Promise.all([promiseOne, promiseTwo]);
-        const dataOne = await responseOne.json();
-        const dataTwo = await responseTwo.json();
+            const [responseOne, responseTwo] = await Promise.all([promiseOne, promiseTwo]);
+            const dataOne = await responseOne.json();
+            const dataTwo = await responseTwo.json();
 
-        setPosition(dataOne.record);
-        setCities(dataTwo.record);
+            setPosition(dataOne.record);
+            setCities(dataTwo.record);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+            openSnackbar('There was an error fetching the data.', 5000);
+        }
     };
 
 
@@ -449,7 +472,7 @@ function Map({ googleApiKey }) {
     }, [selectedCities]);
 
     useEffect(() => {
-        const updatedMarker = position.find(marker => marker.id === selectedMarker?.id)
+        const updatedMarker = position.find(marker => marker.id === selectedMarker?.id);
         if (updatedMarker) {
             setSelectedMarker(updatedMarker);
         }
@@ -480,9 +503,6 @@ function Map({ googleApiKey }) {
             return selectedCities.length === 0 || selectedCities.includes(pos.location.city);
         }) : [];
     }, [position, selectedCities]);
-
-    console.log(filteredPositions)
-
     const handleCenterLocation = () => {
         setZoom(17);
         setCenter(currentLocation);
@@ -564,7 +584,7 @@ function Map({ googleApiKey }) {
                                 <button className='center-location-button' onClick={handleShowListView}><CiCircleList className='nav-icon-svg' /></button>
                                 <button className='center-location-button' onClick={handleCenterLocation}><TbGps className='nav-icon-svg' /></button>
                                 <button className='center-location-button' onClick={() => setShowForm(!showForm)}><IoMdAddCircleOutline className='nav-icon-svg' /></button>
-                                <button className='center-location-button'  onClick={toggleDarkMode}><CgDarkMode className='nav-icon-svg' /></button>
+                                <button className='center-location-button' onClick={toggleDarkMode}><CgDarkMode className='nav-icon-svg' /></button>
                             </div>
                         </div>
                         currentLocation && (
@@ -584,7 +604,7 @@ function Map({ googleApiKey }) {
                                 position={pos.location}
                                 icon={{
                                     url: pos.isFavorited ? Heart : selectedMarker?.id === pos.id ? RedMarker : BlueMarker,
-                                    scaledSize: pos.isFavorited ? {width: 45, height: 45} : { width: 50, height: 50 },
+                                    scaledSize: pos.isFavorited ? { width: 45, height: 45 } : { width: 50, height: 50 },
                                 }}
                             />
                         ))}
@@ -606,6 +626,7 @@ function Map({ googleApiKey }) {
                             GMaps={GMaps}
                             propertyData={position}
                             handleUpatePositions={handleUpatePositions}
+                            openSnackbar={openSnackbar}
                         />
                     </div>
                 </div>
@@ -620,6 +641,7 @@ function Map({ googleApiKey }) {
                             coordinateData={cities}
                             googleApiKey={googleApiKey}
                             setCities={setCities}
+                            openSnackbar={openSnackbar}
                         />
                     )
                 }
