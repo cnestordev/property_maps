@@ -500,26 +500,26 @@ span.city-tag.selected {
 
 .parent-container.dark-mode {
   .filters-container {
-    background-color: #101e2c;
+    background-color: #102a43;
   }
 }
 
 .parent-container.dark-mode .city-tag {
-  border: 3px solid #006cdb;
+  border: 3px solid #829ab1;
   color: #7bbcff;
 }
 
 .parent-container.dark-mode .city-tag.selected {
-  background-color: #0f457d;
+  background-color: #3f4f5f;
   color: #feffff;
 }
 
 .parent-container.dark-mode .nav-icon-svg {
-  color: #006cdb;
+  color: #bcccdc;
 }
 
 .parent-container.dark-mode .home-widget {
-  background-color: #101e2c;
+  background-color: #102a43;
 }
 
 .parent-container.dark-mode .address-container > * {
@@ -531,13 +531,16 @@ span.city-tag.selected {
 }
 
 .parent-container.dark-mode .notes-container {
-  background-color: #20303f;
-  color: #bcc7dd;
+  background-color: #486581;
+}
+
+.parent-container.dark-mode .notes-header {
+  color: #ffffff;
 }
 
 .parent-container.dark-mode .action-buttons button {
-  background-color: #19395b82;
-  color: #cedeff;
+  background-color: #486581;
+  color: #8abdff;
 }
 
 .parent-container.dark-mode .notes-container .notes-item {

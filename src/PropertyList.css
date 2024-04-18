@@ -82,3 +82,17 @@
 .property-info {
   padding: 10px;
 }
+
+.parent-container.dark-mode .list-view-widget {
+  background-color: #102a43;
+  color: #fff;
+}
+
+.parent-container.dark-mode .property-card {
+  background-color: #486581;
+  color: #bcccdc;
+}
+
+.parent-container.dark-mode .property-card.card-selected {
+  background: #829ab1;
+}
