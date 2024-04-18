@@ -1,0 +1,81 @@
+.list-view-widget {
+    position: absolute;
+    left: 0;
+    background: #e3eeff;
+    width: 50%;
+    top: 50%;
+    bottom: 50%;
+    transform: translate(0, -50%);
+    z-index: 3;
+    overflow-y: scroll;
+    height: 100%;
+    padding: 10px;
+    z-index: 0;
+    transition: 700ms;
+    left: -15px;
+}
+
+.hidden {
+    left: -1200px;
+    transition: 700ms;
+}
+
+.property-list {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 15px;
+}
+
+.property-card {
+    width: 100%;
+    background-color: #eff7ff;
+    display: flex;
+    align-items: center;
+    margin: 5px 0;
+    border-radius: 10px;
+    box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
+    padding: 5px;
+    position: relative;
+}
+
+.card-image-container {
+    width: 100px;
+    max-height: 100px;
+    padding: 10px;
+}
+
+
+.property-card-image {
+    height: 80px;
+    width: 80px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.property-card-details {
+    font-size: 14px;
+    margin: 5px 0;
+}
+
+.property-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.property-card-name {
+    font-size: 16px;
+}
+
+.property-card-heart {
+    width: 20px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.property-info {
+    padding: 10px;
+}
+
+

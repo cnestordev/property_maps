@@ -349,7 +349,7 @@ span.city-tag.selected {
 
 .embla {
   overflow: hidden;
-  max-height: 200px;
+  max-height: 600px;
 }
 .embla__container {
   display: flex;

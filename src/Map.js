@@ -1,17 +1,21 @@
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import useEmblaCarousel from 'embla-carousel-react';
 import React, { useEffect, useMemo, useState } from 'react';
-
-import PropertyForm from './PropertyForm';
-import { PropertyList } from './PropertyList';
 import { IoMdAddCircleOutline } from "react-icons/io";
 import { CgDarkMode } from "react-icons/cg";
 import { TbGps } from "react-icons/tb";
+import { CiCircleList } from "react-icons/ci";
+
+import PropertyForm from './PropertyForm';
+import { PropertyList } from './PropertyList';
+import { ListView } from './ListView'; 
+
 import GMaps from "./images/google_maps.png";
 import GPS from "./images/gsp.png";
 import BlueMarker from "./images/marker_green.png";
 import RedMarker from "./images/marker_pink.png";
 import Heart from "./images/heart_alt1.png";
+import { Image } from './Image';
 
 const containerStyle = {
     width: '100%',
@@ -380,6 +384,7 @@ function Map({ googleApiKey }) {
     const [showForm, setShowForm] = useState(false);
     const [emblaRef] = useEmblaCarousel();
     const [isDarkMode, setIsDarkMode] = useState(false);
+    const [showListView, setShowListView] = useState(false);
 
 
     const toggleDarkMode = () => {
@@ -476,6 +481,8 @@ function Map({ googleApiKey }) {
         }) : [];
     }, [position, selectedCities]);
 
+    console.log(filteredPositions)
+
     const handleCenterLocation = () => {
         setZoom(17);
         setCenter(currentLocation);
@@ -519,6 +526,10 @@ function Map({ googleApiKey }) {
         setPosition(newPositions);
     };
 
+    const handleShowListView = () => {
+        setShowListView(prevShowListView => !prevShowListView);
+    };
+
     return (
         <div className={`parent-container ${isDarkMode ? 'dark-mode' : ''}`}>
             <LoadScript libraries={libraries} googleMapsApiKey={googleApiKey}>
@@ -550,9 +561,10 @@ function Map({ googleApiKey }) {
                                 }
                             </div>
                             <div className='nav-icon-container'>
-                                <button className='center-location-button' onClick={() => setShowForm(!showForm)}><IoMdAddCircleOutline className='nav-icon-svg' /></button>
+                                <button className='center-location-button' onClick={handleShowListView}><CiCircleList className='nav-icon-svg' /></button>
                                 <button className='center-location-button' onClick={handleCenterLocation}><TbGps className='nav-icon-svg' /></button>
-                                <CgDarkMode onClick={toggleDarkMode} className='nav-icon-svg' />
+                                <button className='center-location-button' onClick={() => setShowForm(!showForm)}><IoMdAddCircleOutline className='nav-icon-svg' /></button>
+                                <button className='center-location-button'  onClick={toggleDarkMode}><CgDarkMode className='nav-icon-svg' /></button>
                             </div>
                         </div>
                         currentLocation && (
@@ -577,6 +589,12 @@ function Map({ googleApiKey }) {
                             />
                         ))}
                     </GoogleMap>
+                    <div className={`list-view-widget ${!showListView ? 'hidden' : ''}`}>
+                        <ListView
+                            properties={filteredPositions}
+                            handleSelectedMarker={handleSelectedMarker}
+                        />
+                    </div>
                     <div className={`${selectedMarker ? 'home-widget-selected' : ''} home-widget`}>
                         <PropertyList
                             selectedMarker={selectedMarker}
