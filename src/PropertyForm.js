@@ -68,7 +68,7 @@ function PropertyForm({ propertyData, handleCloseModal, isOpen, handleUpatePosit
             let dataToSubmit = propertyData;
 
             let date = new Date();
-            let formattedDate = date.getFullYear() + '-' + (date.getMonth() + 1).toString().padStart(2, '0') + '-' + date.getDate().toString().padStart(2, '0');
+            let formattedDate = date.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit' });
 
 
             if (!existingEntry) {
@@ -232,7 +232,7 @@ function PropertyForm({ propertyData, handleCloseModal, isOpen, handleUpatePosit
                     onChange={handleChange}
                 />
                 <input
-                    type="text"
+                    type="number"
                     name="price"
                     placeholder="Price"
                     value={formData.price}
