@@ -96,12 +96,12 @@
 }
 
 .parent-container.dark-mode .property-card {
-  background-color: #486581;
+  background-color: #2e475f;
   color: #bcccdc;
 }
 
 .parent-container.dark-mode .property-card.card-selected {
-  background: #2e475f;
+  background: #486581;
 }
 
 .parent-container.dark-mode .tour-info img {
