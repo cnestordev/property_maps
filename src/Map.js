@@ -657,6 +657,7 @@ function Map({ googleApiKey }) {
                             selectedMarker={selectedMarker}
                             properties={filteredPositions}
                             handleSelectedMarker={handleSelectedMarker}
+                            handleUnselectedMarker={handleUnselectedMarker}
                         />
                     </div>
                     <div className={`${selectedMarker ? 'home-widget-selected' : ''} home-widget`}>

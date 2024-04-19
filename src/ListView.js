@@ -3,13 +3,21 @@ import Heart from './images/heart.png';
 import Calendar from './images/calendar.png';
 
 
-const PropertyCard = ({ property, handleSelectedMarker, selectedMarker }) => {
+const PropertyCard = ({ property, handleSelectedMarker, handleUnselectedMarker, selectedMarker }) => {
     const { name, beds, baths, price, imageUrls, isFavorited, tour } = property;
+
+    const handleListingWidgetToggler = () => {
+        if (selectedMarker) {
+            handleUnselectedMarker();
+        } else {
+            handleSelectedMarker(property);
+        }
+    };
 
     return (
         <div className={`property-card ${selectedMarker?.id === property.id ? 'card-selected' : ''}`}>
             <div className='card-image-container'>
-                <img onClick={() => handleSelectedMarker(property)} src={imageUrls[0]} alt={name} className="property-card-image" />
+                <img onClick={() => handleListingWidgetToggler()} src={imageUrls[0]} alt={name} className="property-card-image" />
             </div>
             <div className="property-card-info">
                 <span className='property-card-header'>
@@ -32,11 +40,11 @@ const PropertyCard = ({ property, handleSelectedMarker, selectedMarker }) => {
     );
 };
 
-export const ListView = ({ properties, handleSelectedMarker, selectedMarker }) => {
+export const ListView = ({ properties, handleSelectedMarker, handleUnselectedMarker, selectedMarker }) => {
     return (
         <div className="property-list">
             {properties.map(property => (
-                <PropertyCard key={property.id} property={property} handleSelectedMarker={handleSelectedMarker} selectedMarker={selectedMarker} />
+                <PropertyCard handleUnselectedMarker={handleUnselectedMarker} key={property.id} property={property} handleSelectedMarker={handleSelectedMarker} selectedMarker={selectedMarker} />
             ))}
         </div>
     );
