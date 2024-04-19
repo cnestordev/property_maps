@@ -2,7 +2,6 @@ import { Line, LineChart, ResponsiveContainer, XAxis, YAxis } from 'recharts';
 
 export const Chart = ({ data }) => { 
     const isDarkMode = localStorage.getItem('darkmode') === 'true';
-    console.log(isDarkMode)
     const darkmodeSettings = {
         backgroundColor: '#1937468f',
         axisStroke: '#a9dbcd',

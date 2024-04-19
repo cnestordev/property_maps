@@ -7,7 +7,7 @@ const PropertyCard = ({ property, handleSelectedMarker, handleUnselectedMarker, 
     const { name, beds, baths, price, imageUrls, isFavorited, tour } = property;
 
     const handleListingWidgetToggler = () => {
-        if (selectedMarker) {
+        if (selectedMarker?.id === property.id) {
             handleUnselectedMarker();
         } else {
             handleSelectedMarker(property);

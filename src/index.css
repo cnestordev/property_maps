@@ -1,6 +1,16 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   background-color: #bbdcf7;
+}
+
+.size-block {
+  height: 80px;
+  width: 100%;
+  background: #102a43;
 }
 
 .parent-container {
@@ -21,23 +31,26 @@ body {
   gap: 5px;
   align-items: stretch;
   padding: 0;
+  position: relative;
+  overflow-y: hidden;
 }
 
 .home-widget {
   background-color: #f6f8fa;
-  border-radius: 10px;
   position: absolute;
-  width: 0%;
-  transition: width 300ms ease;
+  width: 50%;
+  height: 100%;
+  padding: 15px;
+  right: -800px;
+  transition: 300ms;
+  overflow-y: scroll;
   box-shadow: rgba(9, 30, 66, 0.25) 0px 1px 1px,
     rgba(9, 30, 66, 0.13) 0px 0px 1px 1px;
 }
 
 .home-widget-selected {
-  position: static;
-  width: 90%;
-  transition: width 300ms ease;
-  padding: 15px;
+  transition: 300ms;
+  right: 0px;
 }
 
 .filters-container {
@@ -226,9 +239,16 @@ span.city-tag.selected {
   text-align: center;
 }
 
+.address-info {
+  gap: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #aebdcd;
+}
+
 .address {
   font-size: 1.6rem;
-  color: #1b3041;
   font-weight: 700;
   margin: 0;
 }
@@ -240,8 +260,7 @@ span.city-tag.selected {
 }
 
 .city-state-zip {
-  font-size: 1.3rem;
-  color: #1b3041;
+  font-size: 1.2rem;
   font-weight: 500;
   margin: 5px 0;
 }
@@ -270,11 +289,14 @@ span.city-tag.selected {
   display: flex;
   gap: 15px;
   justify-content: center;
+  align-items: center;
+  padding: 6px;
 }
 
 .property-size {
   display: flex;
   gap: 5px;
+  align-items: center;
 }
 
 .property-image {
@@ -311,7 +333,8 @@ span.city-tag.selected {
   justify-content: center;
 }
 
-.action-buttons button svg, .action-buttons button img {
+.action-buttons button svg,
+.action-buttons button img {
   width: 20px;
   height: 20px;
 }
@@ -466,7 +489,7 @@ span.city-tag.selected {
   box-sizing: border-box;
 }
 
-.tour-update-container{
+.tour-update-container {
   background-color: #232c3e;
   display: flex;
   flex-direction: column;
@@ -580,7 +603,7 @@ span.city-tag.selected {
   border-bottom: 1px solid #4e6994;
 }
 
-.parent-container.dark-mode .pricepad button, 
+.parent-container.dark-mode .pricepad button,
 .parent-container.dark-mode .tourpad button,
 .parent-container.dark-mode .notepad button {
   flex-basis: 100%;

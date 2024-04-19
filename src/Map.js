@@ -27,7 +27,6 @@ import { LuCalendarCheck } from "react-icons/lu";
 const containerStyle = {
     width: '100%',
     height: '100%',
-    borderRadius: '10px',
     position: 'relative'
 };
 
@@ -549,7 +548,6 @@ function Map({ googleApiKey }) {
     };
 
     const handleSelectedMarker = (marker) => {
-        console.log(marker);
         const centerCoords = { lat: marker.location.lat, lng: marker.location.lng };
         setCenter(centerCoords);
         setZoom(16.5);
@@ -659,6 +657,8 @@ function Map({ googleApiKey }) {
                             handleSelectedMarker={handleSelectedMarker}
                             handleUnselectedMarker={handleUnselectedMarker}
                         />
+                        <div className='size-block'>
+                        </div>
                     </div>
                     <div className={`${selectedMarker ? 'home-widget-selected' : ''} home-widget`}>
                         <PropertyList
@@ -672,6 +672,8 @@ function Map({ googleApiKey }) {
                             handleUpatePositions={handleUpatePositions}
                             openSnackbar={openSnackbar}
                         />
+                        <div className='size-block'>
+                        </div>
                     </div>
                 </div>
                 {

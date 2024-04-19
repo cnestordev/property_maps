@@ -12,7 +12,7 @@
   padding: 10px;
   z-index: 0;
   transition: 700ms;
-  left: -16px;
+  left: 0px;
 }
 
 .hidden {

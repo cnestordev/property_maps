@@ -9,6 +9,7 @@ import Heart from "./images/heart.png";
 import Like from "./images/like.png";
 import Calendar from "./images/calendar.png";
 import { LuTrash } from "react-icons/lu";
+import Money from "./images/money.png";
 
 
 
@@ -283,9 +284,10 @@ export const PropertyList = ({ selectedMarker, handleMaps, handleOpen, emblaRef,
         <>
             <div className='property-details'>
                 <div className="address-container">
-                    <p className='address'>{clonedSelectedMarker.name}</p>
-                    <p className='city-state-zip'>{clonedSelectedMarker.location.city}, {clonedSelectedMarker.location.state} {clonedSelectedMarker.location.zip}</p>
-                    <p className='price-subheader'>${parseInt(clonedSelectedMarker.price, 10).toLocaleString()}</p>
+                    <div className="address-info">
+                        <p className='address'>{clonedSelectedMarker.name}</p>
+                        <p className='city-state-zip'>{clonedSelectedMarker.location.city}, {clonedSelectedMarker.location.state} {clonedSelectedMarker.location.zip}</p>
+                    </div>
                     <div className="property-size-container">
                         <span className="property-size"><img className="property-image" src={Bed} alt="Bed" /> {clonedSelectedMarker.beds}</span>
                         <span className="property-size"><img className="property-image" src={Bath} alt="Bath" /> {clonedSelectedMarker.baths}</span>
@@ -294,6 +296,7 @@ export const PropertyList = ({ selectedMarker, handleMaps, handleOpen, emblaRef,
                                 <span className="property-size"><img className="property-image" src={Calendar} alt="Calendar" /> {clonedSelectedMarker.tour.date + ' ' + clonedSelectedMarker.tour.time}</span>
                             )
                         }
+                        <span className='property-size'><img className="property-image" src={Money} alt="Dollar" /> {parseInt(clonedSelectedMarker.price, 10).toLocaleString()}</span>
                     </div>
                 </div>
                 <div onClick={() => handleOpen(clonedSelectedMarker.listingUrl)} style={{ cursor: 'pointer' }}>
