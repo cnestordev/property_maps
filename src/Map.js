@@ -17,6 +17,13 @@ import BlueMarker from "./images/marker_green.png";
 import RedMarker from "./images/marker_pink.png";
 import Heart from "./images/heart_alt1.png";
 
+import { FiTrash } from "react-icons/fi";
+import { MdFavoriteBorder } from "react-icons/md";
+import { LuCalendarCheck } from "react-icons/lu";
+
+
+
+
 const containerStyle = {
     width: '100%',
     height: '100%',
@@ -403,6 +410,9 @@ function Map({ googleApiKey }) {
     const [isDarkMode, setIsDarkMode] = useState(false);
     const [showListView, setShowListView] = useState(false);
     const [openSnackbar, closeSnackbar] = useSnackbar(options);
+    const [filterByFavorites, setFilterByFavorites] = useState(false);
+    const [filterByTours, setFilterByTours] = useState(false);
+    const [filterByTrash, setFilterByTrash] = useState(false);
 
 
     const toggleDarkMode = () => {
@@ -500,10 +510,39 @@ function Map({ googleApiKey }) {
     };
 
     const filteredPositions = useMemo(() => {
+        // Return only "deleted" properties if filterByTrash is true
+        if (filterByTrash) {
+            return position ? position.filter(pos => pos.isHidden) : [];
+        }
+
+        // Return filtered positions based on other criteria if filterByTrash is not true
         return position ? position.filter(pos => {
-            return selectedCities.length === 0 || selectedCities.includes(pos.location.city);
+            // Exclude positions where isHidden is true
+            const hiddenCondition = !pos.isHidden;
+
+            // Filter by selected cities
+            const cityCondition = selectedCities.length === 0 || selectedCities.includes(pos.location.city);
+
+            // Filter by favorites if filterByFavorites is true
+            const favoritesCondition = !filterByFavorites || (filterByFavorites && pos.isFavorited);
+
+            // Filter by tours if filterByTours is true
+            const toursCondition = !filterByTours || (filterByTours && pos.tour && pos.tour.hasTour);
+
+            // Return position if it meets all conditions including not being hidden
+            return hiddenCondition && cityCondition && favoritesCondition && toursCondition;
         }) : [];
-    }, [position, selectedCities]);
+    }, [position, selectedCities, filterByFavorites, filterByTours, filterByTrash]); // Correctly updated dependency array
+
+
+
+
+    // const filteredPositions = useMemo(() => {
+    //     return position ? position.filter(pos => {
+    //         return selectedCities.length === 0 || selectedCities.includes(pos.location.city);
+    //     }) : [];
+    // }, [position, selectedCities]);
+
     const handleCenterLocation = () => {
         setZoom(17);
         setCenter(currentLocation);
@@ -568,6 +607,9 @@ function Map({ googleApiKey }) {
                     >
                         <div className='filters-container'>
                             <div className='city-tags-container'>
+                                <span onClick={() => setFilterByTrash(!filterByTrash)} className={`city-tag ${filterByTrash ? 'selected' : ''}`}><FiTrash /></span>
+                                <span onClick={() => setFilterByFavorites(!filterByFavorites)} className={`city-tag ${filterByFavorites ? 'selected' : ''}`}><MdFavoriteBorder /></span>
+                                <span onClick={() => setFilterByTours(!filterByTours)} className={`city-tag ${filterByTours ? 'selected' : ''}`}><LuCalendarCheck /></span>
                                 {
                                     cities.length > 0 ? (
                                         cities.map((city, index) => (

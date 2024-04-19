@@ -183,42 +183,43 @@ export const PropertyList = ({ selectedMarker, handleMaps, handleOpen, emblaRef,
         setPrice(0);
     };
 
-    const handleDeleteProperty = async () => {
+    const handleToggleHideProperty = async () => {
         const jsonBlobUrl = process.env.REACT_APP_JSON_URL;
 
         try {
             const index = propertyData.findIndex(property => property.id === clonedSelectedMarker.id);
 
             if (index !== -1) {
-
-                let dataToSubmit = propertyData.filter(property => property.id !== clonedSelectedMarker.id);
+                // Toggle the isHidden property instead of deleting the item
+                propertyData[index].isHidden = true;
 
                 const response = await fetch(jsonBlobUrl, {
-                    method: 'PUT', // Use PUT to replace the entire collection
+                    method: 'PUT', // Use PUT to update the entire collection
                     headers: {
                         'Content-Type': 'application/json',
                         'Accept': 'application/json',
                         'X-Master-Key': process.env.REACT_APP_JSON_MASTER_KEY
                     },
-                    body: JSON.stringify(dataToSubmit)
+                    body: JSON.stringify(propertyData)
                 });
 
                 if (response.ok) {
-                    console.log('Property deleted successfully from jsonblob');
+                    console.log('Property visibility toggled successfully in jsonblob');
 
                     const data = await response.json();
-                    handleUpatePositions(data.record);
-                    openSnackbar('Property deleted successfully.', 3000);
+                    handleUpatePositions(data.record); // Assuming you might still need to update positions
+                    openSnackbar('Property hidden successfully.', 3000);
                 } else {
-                    console.error('Failed to delete property from jsonblob');
+                    console.error('Failed to hide property in jsonblob');
+                    openSnackbar('Failed to hide property.', 3000);
                 }
             } else {
                 openSnackbar('Property with id ' + clonedSelectedMarker.id + ' does not exist.', 3000);
                 console.log(`Property with id ${clonedSelectedMarker.id} does not exist.`);
             }
         } catch (error) {
-            openSnackbar('Error while deleting property.', 3000);
-            console.error('Error while deleting property:', error);
+            openSnackbar('Error while toggling property visibility.', 3000);
+            console.error('Error while toggling property visibility:', error);
         }
     };
 
@@ -322,7 +323,7 @@ export const PropertyList = ({ selectedMarker, handleMaps, handleOpen, emblaRef,
                     <button onClick={handleToggleFavorite} className="like-button">
                         <img className="like-image" src={clonedSelectedMarker.isFavorited ? Heart : Like} alt="like" />
                     </button>
-                    <button onClick={handleDeleteProperty}><LuTrash /></button>
+                    <button onClick={handleToggleHideProperty}><LuTrash /></button>
                 </div>
             </div>
             {
