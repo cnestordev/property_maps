@@ -21,7 +21,12 @@ function PropertyForm({ propertyData, handleCloseModal, isOpen, handleUpatePosit
         name: '',
         notes: [],
         isFavorited: false,
-        historicalPrices: []
+        historicalPrices: [],
+        tour: {
+            date: "",
+            time: "",
+            hasTour: false
+        }
     });
     const [isLoading, setIsLoading] = useState(false);
     const [currentNote, setCurrentNote] = useState('');

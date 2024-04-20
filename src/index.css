@@ -10,7 +10,7 @@ body {
 .size-block {
   height: 80px;
   width: 100%;
-  background: #102a43;
+  background: #f6f8fa;
 }
 
 .parent-container {
@@ -623,4 +623,8 @@ span.city-tag.selected {
   border: 1px solid transparent;
   color: #c6d9ff;
   font-size: 18px;
+}
+
+.parent-container.dark-mode .size-block {
+  background: #102a43;
 }
