@@ -26,9 +26,13 @@ function PropertyForm({ propertyData, handleCloseModal, isOpen, handleUpatePosit
             date: "",
             time: "",
             hasTour: false
-        }
+        },
+        isApartment: false,
+        apartmentName: ''
     });
     const [isLoading, setIsLoading] = useState(false);
+    const [isApartment, setIsApartment] = useState(false);
+    const [apartmentName, setApartmentName] = useState('');
     const [currentNote, setCurrentNote] = useState('');
 
     const getCityCoordinates = async ({ city, state }) => {
@@ -87,6 +91,8 @@ function PropertyForm({ propertyData, handleCloseModal, isOpen, handleUpatePosit
                     price: formData.price,
                     date: formattedDate
                 });
+                formData.isApartment = isApartment;
+                formData.apartmentName = isApartment ? apartmentName : '';
                 dataToSubmit = [...propertyData, formData];
             } else {
                 return console.log(`An entry with id ${formData.id} already exists.`);
@@ -214,6 +220,12 @@ function PropertyForm({ propertyData, handleCloseModal, isOpen, handleUpatePosit
         }
     }
 
+    const handleApartmentSelected = (e) => {
+        e.stopPropagation();
+        e.preventDefault()
+        setIsApartment(!isApartment);
+    };
+
     return (
         <div onSubmit={handleSubmit} className='property-form-container'>
             <form className='property-form'>
@@ -225,6 +237,10 @@ function PropertyForm({ propertyData, handleCloseModal, isOpen, handleUpatePosit
                     value={formData.listingUrl}
                     onChange={handleChange}
                 />
+                <span className={`apt-input ${isApartment ? 'selected' : ''}`}>
+                    <span onClick={(e) => handleApartmentSelected(e)} className='apt-label'>Apartment</span>
+                    <input onChange={(e) => setApartmentName(e.target.value)} placeholder='Enter apartment name' type='text' />
+                </span>
                 <input
                     type="number"
                     name="beds"

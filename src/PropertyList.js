@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import { BiMessageRoundedAdd } from "react-icons/bi";
+import { Image } from "./Image";
 import { Chart } from "./Chart";
 import ImageGallery from "./ImageGallery";
 import Bath from "./images/bath.png";
@@ -10,6 +11,7 @@ import Like from "./images/like.png";
 import Calendar from "./images/calendar.png";
 import { LuTrash } from "react-icons/lu";
 import Money from "./images/money.png";
+import Apartment from "./images/apartment.png";
 
 
 
@@ -288,6 +290,11 @@ export const PropertyList = ({ selectedMarker, handleMaps, handleOpen, emblaRef,
                         <p className='address'>{clonedSelectedMarker.name}</p>
                         <p className='city-state-zip'>{clonedSelectedMarker.location.city}, {clonedSelectedMarker.location.state} {clonedSelectedMarker.location.zip}</p>
                     </div>
+                    {
+                        clonedSelectedMarker.apartmentName && (
+                            <p className='apartment-name'><Image image={Apartment} classes={'property-image'} /> {clonedSelectedMarker.apartmentName}</p>
+                        )
+                    }
                     <div className="property-size-container">
                         <span className="property-size"><img className="property-image" src={Bed} alt="Bed" /> {clonedSelectedMarker.beds}</span>
                         <span className="property-size"><img className="property-image" src={Bath} alt="Bath" /> {clonedSelectedMarker.baths}</span>

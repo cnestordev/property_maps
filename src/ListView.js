@@ -4,7 +4,7 @@ import Calendar from './images/calendar.png';
 
 
 const PropertyCard = ({ property, handleSelectedMarker, handleUnselectedMarker, selectedMarker }) => {
-    const { name, beds, baths, price, imageUrls, isFavorited, tour } = property;
+    const { name, beds, baths, price, imageUrls, isFavorited, tour, apartmentName } = property;
 
     const handleListingWidgetToggler = () => {
         if (selectedMarker?.id === property.id) {
@@ -21,7 +21,12 @@ const PropertyCard = ({ property, handleSelectedMarker, handleUnselectedMarker, 
             </div>
             <div className="property-card-info">
                 <span className='property-card-header'>
-                    <h2 className='property-card-name property-card-details'>{name}</h2>
+                    {
+                        apartmentName && (
+                            <h2 className='property-card-name property-card-details'>{apartmentName}</h2>
+                        )
+                    }
+                    <h3 className='property-card-name property-card-details'>{name}</h3>
                     {
                         isFavorited && <img className='property-card-heart' src={Heart} alt="heart" />
                     }

@@ -110,9 +110,15 @@ body {
   outline: none;
 }
 
+.property-form textarea {
+  border-radius: 8px;
+  height: 50px;
+  padding: 8px;
+}
+
 .property-form button {
   border: none;
-  background-color: #dbf8e5;
+  background-color: #e3eeff;
   padding: 12px;
   border-radius: 15px;
   cursor: pointer;
@@ -124,6 +130,52 @@ body {
 .property-form button svg {
   width: 30px;
   height: 30px;
+}
+
+.property-form .apt-input {
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid #cfcfcf;
+  padding: 12px;
+  width: max-content;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: 300ms;
+}
+
+.property-form .apt-input.selected {
+  background-color: #e9e9e9;
+  border: 1px solid #a0a0a0;
+  transition: 300ms;
+}
+
+.property-form .apt-input input {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #757575;
+  border-radius: 0;
+  display: none;
+  padding: 5px;
+}
+
+.property-form .apt-input.selected input {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #757575;
+  border-radius: 0;
+  display: inline-block;
+}
+
+.parent-container.dark-mode .property-form .apt-input {
+  background-color: transparent;
+  border: 1px solid #89a0b3;
+}
+
+.parent-container.dark-mode .property-form .apt-input.selected {
+  background-color: #6b7781c2;
+  border: 1px solid #cad8e3;
 }
 
 * {
@@ -245,6 +297,12 @@ span.city-tag.selected {
   align-items: center;
   justify-content: center;
   color: #aebdcd;
+}
+
+.apartment-name {
+  color: #777f86;
+  font-size: 18px;
+  font-weight: bold;
 }
 
 .address {
@@ -627,4 +685,24 @@ span.city-tag.selected {
 
 .parent-container.dark-mode .size-block {
   background: #102a43;
+}
+
+.parent-container.dark-mode .property-form {
+  background-color: #273c51;
+  border: none;
+  color: #bcccdc;
+}
+
+
+.parent-container.dark-mode .property-form input, 
+.parent-container.dark-mode .property-form textarea,
+.parent-container.dark-mode .image-input-container {
+  background-color: #35495f;
+  border: none;
+  color: #dee8f1;
+}
+
+.parent-container.dark-mode .property-form button {
+  background-color: #102a43;
+  color: #bcccdc;
 }

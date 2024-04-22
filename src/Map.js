@@ -17,6 +17,7 @@ import BlueMarker from "./images/marker_green.png";
 import RedMarker from "./images/marker_pink.png";
 import Heart from "./images/heart_alt1.png";
 
+import { MdOutlineApartment } from "react-icons/md";
 import { FiTrash } from "react-icons/fi";
 import { MdFavoriteBorder } from "react-icons/md";
 import { LuCalendarCheck } from "react-icons/lu";
@@ -412,6 +413,7 @@ function Map({ googleApiKey }) {
     const [filterByFavorites, setFilterByFavorites] = useState(false);
     const [filterByTours, setFilterByTours] = useState(false);
     const [filterByTrash, setFilterByTrash] = useState(false);
+    const [filterByApartments, setFilterByApartments] = useState(false);
 
 
     const toggleDarkMode = () => {
@@ -522,6 +524,9 @@ function Map({ googleApiKey }) {
             // Filter by selected cities
             const cityCondition = selectedCities.length === 0 || selectedCities.includes(pos.location.city);
 
+            // Filter By Apartments
+            const apartmentCondition = !filterByApartments || (filterByApartments && pos.isApartment);
+
             // Filter by favorites if filterByFavorites is true
             const favoritesCondition = !filterByFavorites || (filterByFavorites && pos.isFavorited);
 
@@ -529,9 +534,9 @@ function Map({ googleApiKey }) {
             const toursCondition = !filterByTours || (filterByTours && pos.tour && pos.tour.hasTour);
 
             // Return position if it meets all conditions including not being hidden
-            return hiddenCondition && cityCondition && favoritesCondition && toursCondition;
+            return hiddenCondition && cityCondition && apartmentCondition && favoritesCondition && toursCondition;
         }) : [];
-    }, [position, selectedCities, filterByFavorites, filterByTours, filterByTrash]); // Correctly updated dependency array
+    }, [position, selectedCities, filterByFavorites, filterByTours, filterByTrash, filterByApartments]); // Correctly updated dependency array
 
 
 
@@ -605,9 +610,10 @@ function Map({ googleApiKey }) {
                     >
                         <div className='filters-container'>
                             <div className='city-tags-container'>
-                                <span onClick={() => setFilterByTrash(!filterByTrash)} className={`city-tag ${filterByTrash ? 'selected' : ''}`}><FiTrash /></span>
+                                <span onClick={() => setFilterByApartments(!filterByApartments)} className={`city-tag ${filterByApartments ? 'selected' : ''}`}><MdOutlineApartment /></span>
                                 <span onClick={() => setFilterByFavorites(!filterByFavorites)} className={`city-tag ${filterByFavorites ? 'selected' : ''}`}><MdFavoriteBorder /></span>
                                 <span onClick={() => setFilterByTours(!filterByTours)} className={`city-tag ${filterByTours ? 'selected' : ''}`}><LuCalendarCheck /></span>
+                                <span onClick={() => setFilterByTrash(!filterByTrash)} className={`city-tag ${filterByTrash ? 'selected' : ''}`}><FiTrash /></span>
                                 {
                                     cities.length > 0 ? (
                                         cities.map((city, index) => (
