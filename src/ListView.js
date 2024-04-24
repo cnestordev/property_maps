@@ -45,11 +45,35 @@ const PropertyCard = ({ property, handleSelectedMarker, handleUnselectedMarker, 
     );
 };
 
-export const ListView = ({ properties, handleSelectedMarker, handleUnselectedMarker, selectedMarker }) => {
+const groupPropertiesByCity = (properties) => {
+    return properties.reduce((groups, property) => {
+      const city = property.location.city;
+      if (!groups[city]) {
+        groups[city] = [];
+      }
+      groups[city].push(property);
+      return groups;
+    }, {});
+  };
+  
+  export const ListView = ({ properties, handleSelectedMarker, handleUnselectedMarker, selectedMarker }) => {
+    const groupedProperties = groupPropertiesByCity(properties);
+
     return (
         <div className="property-list">
-            {properties.map(property => (
-                <PropertyCard handleUnselectedMarker={handleUnselectedMarker} key={property.id} property={property} handleSelectedMarker={handleSelectedMarker} selectedMarker={selectedMarker} />
+            {Object.keys(groupedProperties).map(city => (
+                <div key={city}>
+                    <h2 className="city-header">{city}</h2>
+                    {groupedProperties[city].map(property => (
+                        <PropertyCard
+                            handleUnselectedMarker={handleUnselectedMarker}
+                            key={property.id}
+                            property={property}
+                            handleSelectedMarker={handleSelectedMarker}
+                            selectedMarker={selectedMarker}
+                        />
+                    ))}
+                </div>
             ))}
         </div>
     );

@@ -13,6 +13,7 @@
   z-index: 0;
   transition: 700ms;
   left: 0px;
+  padding-top: 0px;
 }
 
 .hidden {
@@ -23,7 +24,7 @@
 .property-list {
   display: flex;
   flex-direction: column;
-  padding: 10px 15px;
+  padding: 0 15px 10px 15px;
 }
 
 .property-card {
@@ -106,4 +107,15 @@
 
 .parent-container.dark-mode .tour-info img {
   filter: invert(80%);
+}
+
+.city-header {
+  position: sticky;
+  top: 0;
+  background: #102a43;
+  z-index: 1000;
+  padding: 0% 0;
+  font-size: 20px;
+  color: #eaf5ff;
+  user-select: none;
 }

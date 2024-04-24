@@ -75,65 +75,74 @@ const darkModeStyle = [
 
 const lightModeStyle = [
     {
-        "featureType": "all",
+        "featureType": "water",
         "elementType": "all",
         "stylers": [
             {
-                "saturation": "32"
+                "hue": "#7fc8ed"
             },
             {
-                "lightness": "-3"
+                "saturation": 55
+            },
+            {
+                "lightness": -6
             },
             {
                 "visibility": "on"
+            }
+        ]
+    },
+    {
+        "featureType": "water",
+        "elementType": "labels",
+        "stylers": [
+            {
+                "hue": "#7fc8ed"
             },
             {
-                "weight": "1.18"
+                "saturation": 55
+            },
+            {
+                "lightness": -6
+            },
+            {
+                "visibility": "off"
             }
         ]
     },
     {
-        "featureType": "administrative",
-        "elementType": "labels",
+        "featureType": "poi.park",
+        "elementType": "geometry",
         "stylers": [
             {
-                "visibility": "simplified"
+                "hue": "#83cead"
+            },
+            {
+                "saturation": 1
+            },
+            {
+                "lightness": -15
+            },
+            {
+                "visibility": "on"
             }
         ]
     },
     {
-        "featureType": "administrative.locality",
-        "elementType": "labels",
+        "featureType": "landscape",
+        "elementType": "geometry",
         "stylers": [
             {
-                "visibility": "simplified"
-            }
-        ]
-    },
-    {
-        "featureType": "administrative.locality",
-        "elementType": "labels.text",
-        "stylers": [
+                "hue": "#f3f4f4"
+            },
             {
-                "visibility": "simplified"
-            }
-        ]
-    },
-    {
-        "featureType": "administrative.neighborhood",
-        "elementType": "labels",
-        "stylers": [
+                "saturation": -84
+            },
             {
-                "visibility": "simplified"
-            }
-        ]
-    },
-    {
-        "featureType": "administrative.neighborhood",
-        "elementType": "labels.text",
-        "stylers": [
+                "lightness": 59
+            },
             {
-                "visibility": "simplified"
+                "visibility": "on"
             }
         ]
     },
@@ -142,109 +151,34 @@ const lightModeStyle = [
         "elementType": "labels",
         "stylers": [
             {
-                "visibility": "off"
-            }
-        ]
-    },
-    {
-        "featureType": "landscape.man_made",
-        "elementType": "all",
-        "stylers": [
-            {
-                "saturation": "-70"
+                "hue": "#ffffff"
             },
             {
-                "lightness": "14"
-            }
-        ]
-    },
-    {
-        "featureType": "poi",
-        "elementType": "all",
-        "stylers": [
+                "saturation": -100
+            },
+            {
+                "lightness": 100
+            },
             {
                 "visibility": "off"
             }
         ]
     },
     {
-        "featureType": "poi.attraction",
-        "elementType": "all",
+        "featureType": "road",
+        "elementType": "geometry",
         "stylers": [
             {
-                "visibility": "off"
-            }
-        ]
-    },
-    {
-        "featureType": "poi.business",
-        "elementType": "labels.text",
-        "stylers": [
+                "hue": "#ffffff"
+            },
             {
-                "visibility": "off"
-            }
-        ]
-    },
-    {
-        "featureType": "poi.business",
-        "elementType": "labels.icon",
-        "stylers": [
+                "saturation": -100
+            },
             {
-                "visibility": "off"
-            }
-        ]
-    },
-    {
-        "featureType": "poi.medical",
-        "elementType": "labels",
-        "stylers": [
+                "lightness": 100
+            },
             {
-                "visibility": "simplified"
-            }
-        ]
-    },
-    {
-        "featureType": "poi.medical",
-        "elementType": "labels.text",
-        "stylers": [
-            {
-                "visibility": "off"
-            }
-        ]
-    },
-    {
-        "featureType": "poi.medical",
-        "elementType": "labels.icon",
-        "stylers": [
-            {
-                "visibility": "off"
-            }
-        ]
-    },
-    {
-        "featureType": "poi.park",
-        "elementType": "labels.text.fill",
-        "stylers": [
-            {
-                "visibility": "simplified"
-            }
-        ]
-    },
-    {
-        "featureType": "poi.park",
-        "elementType": "labels.icon",
-        "stylers": [
-            {
-                "visibility": "off"
-            }
-        ]
-    },
-    {
-        "featureType": "poi.school",
-        "elementType": "labels.text",
-        "stylers": [
-            {
-                "visibility": "simplified"
+                "visibility": "on"
             }
         ]
     },
@@ -253,126 +187,74 @@ const lightModeStyle = [
         "elementType": "labels",
         "stylers": [
             {
-                "visibility": "off"
-            }
-        ]
-    },
-    {
-        "featureType": "road.highway",
-        "elementType": "labels.text",
-        "stylers": [
+                "hue": "#bbbbbb"
+            },
             {
-                "visibility": "simplified"
-            }
-        ]
-    },
-    {
-        "featureType": "road.highway",
-        "elementType": "labels.icon",
-        "stylers": [
+                "saturation": -100
+            },
+            {
+                "lightness": 26
+            },
             {
                 "visibility": "on"
-            }
-        ]
-    },
-    {
-        "featureType": "road.highway.controlled_access",
-        "elementType": "labels.text",
-        "stylers": [
-            {
-                "visibility": "simplified"
-            }
-        ]
-    },
-    {
-        "featureType": "road.highway.controlled_access",
-        "elementType": "labels.icon",
-        "stylers": [
-            {
-                "visibility": "simplified"
             }
         ]
     },
     {
         "featureType": "road.arterial",
-        "elementType": "labels.text",
+        "elementType": "geometry",
         "stylers": [
+            {
+                "hue": "#ffcc00"
+            },
+            {
+                "saturation": 100
+            },
+            {
+                "lightness": -35
+            },
             {
                 "visibility": "simplified"
             }
         ]
     },
     {
-        "featureType": "road.arterial",
-        "elementType": "labels.icon",
+        "featureType": "road.highway",
+        "elementType": "geometry",
         "stylers": [
+            {
+                "hue": "#ffcc00"
+            },
+            {
+                "saturation": 100
+            },
+            {
+                "lightness": -22
+            },
             {
                 "visibility": "on"
             }
         ]
     },
     {
-        "featureType": "road.local",
-        "elementType": "labels.text",
-        "stylers": [
-            {
-                "visibility": "simplified"
-            }
-        ]
-    },
-    {
-        "featureType": "road.local",
-        "elementType": "labels.icon",
-        "stylers": [
-            {
-                "visibility": "on"
-            }
-        ]
-    },
-    {
-        "featureType": "transit",
-        "elementType": "labels",
-        "stylers": [
-            {
-                "visibility": "off"
-            }
-        ]
-    },
-    {
-        "featureType": "transit.station.airport",
-        "elementType": "labels.text",
-        "stylers": [
-            {
-                "visibility": "simplified"
-            }
-        ]
-    },
-    {
-        "featureType": "water",
+        "featureType": "poi.school",
         "elementType": "all",
         "stylers": [
             {
-                "saturation": "100"
+                "hue": "#d7e4e4"
             },
             {
-                "lightness": "-14"
-            }
-        ]
-    },
-    {
-        "featureType": "water",
-        "elementType": "labels",
-        "stylers": [
-            {
-                "visibility": "off"
+                "saturation": -60
             },
             {
-                "lightness": "12"
+                "lightness": 23
+            },
+            {
+                "visibility": "on"
             }
         ]
     }
 ];
-
 const centerLatLng = {
     lat: 33.20384585565068,
     lng: -96.72912847616412
