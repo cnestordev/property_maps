@@ -11,14 +11,16 @@
   height: 100%;
   padding: 10px;
   z-index: 0;
-  transition: 700ms;
+  transition-property: left;
+  transition-duration: 400ms;
   left: 0px;
   padding-top: 0px;
 }
 
 .hidden {
   left: -1200px;
-  transition: 700ms;
+  transition-property: left;
+  transition-duration: 400ms;
 }
 
 .property-list {
@@ -112,10 +114,15 @@
 .city-header {
   position: sticky;
   top: 0;
-  background: #102a43;
+  background: #e3eeff;
   z-index: 1000;
   padding: 0% 0;
   font-size: 20px;
-  color: #eaf5ff;
+  color: #325ea3;
   user-select: none;
+}
+
+.parent-container.dark-mode .city-header {
+  background-color: #102a43;
+  color: #fff;
 }

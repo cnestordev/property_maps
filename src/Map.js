@@ -75,60 +75,6 @@ const darkModeStyle = [
 
 const lightModeStyle = [
     {
-        "featureType": "water",
-        "elementType": "all",
-        "stylers": [
-            {
-                "hue": "#7fc8ed"
-            },
-            {
-                "saturation": 55
-            },
-            {
-                "lightness": -6
-            },
-            {
-                "visibility": "on"
-            }
-        ]
-    },
-    {
-        "featureType": "water",
-        "elementType": "labels",
-        "stylers": [
-            {
-                "hue": "#7fc8ed"
-            },
-            {
-                "saturation": 55
-            },
-            {
-                "lightness": -6
-            },
-            {
-                "visibility": "off"
-            }
-        ]
-    },
-    {
-        "featureType": "poi.park",
-        "elementType": "geometry",
-        "stylers": [
-            {
-                "hue": "#83cead"
-            },
-            {
-                "saturation": 1
-            },
-            {
-                "lightness": -15
-            },
-            {
-                "visibility": "on"
-            }
-        ]
-    },
-    {
         "featureType": "landscape",
         "elementType": "geometry",
         "stylers": [
@@ -159,6 +105,96 @@ const lightModeStyle = [
             {
                 "lightness": 100
             },
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "poi.attraction",
+        "elementType": "labels.text",
+        "stylers": [
+            {
+                "visibility": "simplified"
+            }
+        ]
+    },
+    {
+        "featureType": "poi.business",
+        "elementType": "labels.icon",
+        "stylers": [
+            {
+                "visibility": "on"
+            }
+        ]
+    },
+    {
+        "featureType": "poi.government",
+        "elementType": "labels.text",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "poi.medical",
+        "elementType": "labels.text",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "poi.park",
+        "elementType": "geometry",
+        "stylers": [
+            {
+                "hue": "#00ff8f"
+            },
+            {
+                "saturation": 1
+            },
+            {
+                "lightness": -15
+            },
+            {
+                "visibility": "on"
+            }
+        ]
+    },
+    {
+        "featureType": "poi.place_of_worship",
+        "elementType": "labels.text",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "poi.school",
+        "elementType": "all",
+        "stylers": [
+            {
+                "hue": "#d7e4e4"
+            },
+            {
+                "saturation": -60
+            },
+            {
+                "lightness": 23
+            },
+            {
+                "visibility": "on"
+            }
+        ]
+    },
+    {
+        "featureType": "poi.school",
+        "elementType": "labels.text",
+        "stylers": [
             {
                 "visibility": "off"
             }
@@ -201,24 +237,6 @@ const lightModeStyle = [
         ]
     },
     {
-        "featureType": "road.arterial",
-        "elementType": "geometry",
-        "stylers": [
-            {
-                "hue": "#ffcc00"
-            },
-            {
-                "saturation": 100
-            },
-            {
-                "lightness": -35
-            },
-            {
-                "visibility": "simplified"
-            }
-        ]
-    },
-    {
         "featureType": "road.highway",
         "elementType": "geometry",
         "stylers": [
@@ -237,24 +255,62 @@ const lightModeStyle = [
         ]
     },
     {
-        "featureType": "poi.school",
+        "featureType": "road.arterial",
+        "elementType": "geometry",
+        "stylers": [
+            {
+                "hue": "#ffcc00"
+            },
+            {
+                "saturation": 100
+            },
+            {
+                "lightness": -35
+            },
+            {
+                "visibility": "simplified"
+            }
+        ]
+    },
+    {
+        "featureType": "water",
         "elementType": "all",
         "stylers": [
             {
-                "hue": "#d7e4e4"
+                "hue": "#7fc8ed"
             },
             {
-                "saturation": -60
+                "saturation": 55
             },
             {
-                "lightness": 23
+                "lightness": -6
             },
             {
                 "visibility": "on"
             }
         ]
+    },
+    {
+        "featureType": "water",
+        "elementType": "labels",
+        "stylers": [
+            {
+                "hue": "#7fc8ed"
+            },
+            {
+                "saturation": 55
+            },
+            {
+                "lightness": -6
+            },
+            {
+                "visibility": "off"
+            }
+        ]
     }
 ];
+
+
 const centerLatLng = {
     lat: 33.20384585565068,
     lng: -96.72912847616412
