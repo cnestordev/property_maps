@@ -33,6 +33,7 @@ body {
   padding: 0;
   position: relative;
   overflow-y: hidden;
+  overflow-x: hidden;
 }
 
 .home-widget {
@@ -41,7 +42,7 @@ body {
   width: 50%;
   height: 100%;
   padding: 15px;
-  right: -800px;
+  right: -1200px;
   transition: 300ms;
   overflow-y: scroll;
   box-shadow: rgba(9, 30, 66, 0.25) 0px 1px 1px,
